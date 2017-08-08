@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work4j.space.dao.ToolDao">
+    
+    <!-- 查询 Tool -->
+    <select id="find" parameterType="com.work4j.space.pojo.query.ToolQuery" resultType="com.work4j.space.pojo.Tool">
+        SELECT * FROM tool_t t
+        <where>
+            <if test="search != null and search != ''">
+                AND t.name LIKE CONCAT('%',#{search},'%')
+            </if>
+        </where>
+        ORDER BY t.create_data_time DESC
+    </select>
+    
+    <!-- 通过id得到一个 Tool-->
+    <select id="get" parameterType="string" resultType="com.work4j.space.pojo.Tool">
+        SELECT * FROM tool_t WHERE id = #{id}
+    </select>
+    
+    <!-- 新增 Tool -->
+    <insert id="add" parameterType="com.work4j.space.pojo.form.ToolForm">
+        INSERT INTO tool_t (
+            id, name, link, enabled, create_data_time, create_data_username, update_data_time, update_data_username, description
+        )
+        VALUES(
+            #{id}, #{name}, #{link}, #{enabled}, #{createDataTime}, #{createDataUsername}, #{updateDataTime}, #{updateDataUsername}, #{description}
+        )
+    </insert>
+    
+    <!-- 修改 Tool -->
+    <update id="update" parameterType="com.work4j.space.pojo.form.ToolForm">
+        UPDATE tool_t SET
+            name = #{name},
+            link = #{link},
+            enabled = #{enabled},
+            update_data_time = #{updateDataTime},
+            update_data_username = #{updateDataUsername},
+            description = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除一个 Tool -->
+    <delete id="delete" parameterType="string">
+        DELETE FROM tool_t WHERE id = #{id}
+    </delete>
+
+    <!-- 修改状态-->
+    <update id="changeEnabled">
+        UPDATE tool_t SET enabled=#{enabled} WHERE id = #{id}
+    </update>
+</mapper>
