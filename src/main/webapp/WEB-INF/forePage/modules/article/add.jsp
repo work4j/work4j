@@ -22,6 +22,30 @@
                                lay-verify="title" autocomplete="off" class="layui-input">
                     </div>
                 </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">所在类别</label>
+                        <div class="layui-input-block">
+                            <select lay-verify="required" name="class">
+                                <option></option>
+                                <option value="1" >layui框架综合</option>
+                                <option value="2" >layui.mobile模块</option>
+                                <option value="3" >layer弹出层</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <%--<label class="layui-form-label">悬赏飞吻</label>
+                        <div class="layui-input-block">
+                            <select name="experience">
+                                <option value="5" selected>5</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>--%>
+                    </div>
+                </div>
                 <div class="layui-form-item layui-form-text">
                     <div class="layui-input-block">
                         <textarea id="L_content" name="content" required lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 260px;"></textarea>

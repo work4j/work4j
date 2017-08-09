@@ -37,7 +37,7 @@ public class SecurityFilter implements Filter {
             } else {
                 httpResponse.sendRedirect(httpRequest.getContextPath() + ADMIN_LOGIN_URL);
             }
-        } else if (user.getUserType() != null && user.getUserType() != 1) {
+        } else if (user.getUserType() == null || (user.getUserType() != null && user.getUserType() != 1)) {
             httpResponse.sendRedirect(httpRequest.getContextPath() + NO_PERMISSION_URL);
         } else {
             chain.doFilter(request, response);

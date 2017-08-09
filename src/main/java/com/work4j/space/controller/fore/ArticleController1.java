@@ -29,7 +29,7 @@ public class ArticleController1 {
     @Resource
     private UserService userService;
 
-    @RequestMapping(value = "/articleList", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView testPage(ArticleQuery query) {
         ModelAndView mav = new ModelAndView("article/list");
         mav.addObject("result", articleService.findByPage(query));
@@ -43,7 +43,7 @@ public class ArticleController1 {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addPage() {
         if (SystemHelper.getCurrentUser() == null) {
-            return "redirect:articleList";
+            return "redirect:list";
         }
         return "article/add";
     }
@@ -52,7 +52,7 @@ public class ArticleController1 {
     public String add(ArticleForm form) {
         form.setUserId(SystemHelper.getCurrentUser().getId());
         articleService.add(form);
-        return "redirect:articleList";
+        return "redirect:list";
     }
 
     @RequestMapping(value = "/edit_{id}", method = RequestMethod.GET)

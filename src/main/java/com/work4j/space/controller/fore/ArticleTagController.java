@@ -86,10 +86,12 @@ public class ArticleTagController {
 	/**
      * 根据id删除 ArticleTag
      */
-	@RequestMapping(value = "/delete_{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete_{id}", method = RequestMethod.POST)
+    @ResponseBody
 	public Map<String, Object> delete(@PathVariable("id") final String id) {
 		Map<String, Object> map = new HashMap<String, Object>();
         articleTagService.delete(id);
+        map.put("success", true);
         return map;
 	}	
 	
@@ -101,6 +103,7 @@ public class ArticleTagController {
     public final Map<String, Object> enabled(@PathVariable("id") final String id){
         Map<String, Object> map = new HashMap<String, Object>();
         articleTagService.changeEnabled(id, 1);
+        map.put("success", true);
         return map;
     }
 	
@@ -112,6 +115,7 @@ public class ArticleTagController {
     public final Map<String, Object> disabled(@PathVariable("id") final String id){
 		Map<String, Object> map = new HashMap<String, Object>();
         articleTagService.changeEnabled(id, 2);
+        map.put("success", true);
         return map;
     }
 }

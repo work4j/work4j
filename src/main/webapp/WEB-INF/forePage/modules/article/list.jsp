@@ -19,7 +19,7 @@
                 <form class="fly-search">
                     <i class="iconfont icon-sousuo"></i> <input class="layui-input" autocomplete="off"
                                                                 placeholder="搜索内容，回车跳转" type="text"
-                                                                id="simpleQueryParam" name="simpleQueryParam">
+                                                                id="search" name="search">
                 </form>
                 <a href="add" class="layui-btn jie-add">发布文章</a>
             </div>
@@ -44,7 +44,7 @@
                         </p></li>
                 </c:forEach>
             </ul>
-            <div style="text-align: center">
+            <div style="text-align: center; background-color: #ffffff">
                 <div id="pageDiv"></div>
             </div>
         </div>
@@ -92,13 +92,13 @@
 <jsp:include page="/WEB-INF/forePage/common/import_js_fore.jsp"></jsp:include>
 <!-- 当前页面js -->
 <script>
-    $("#simpleQueryParam").val(GetQueryString("simpleQueryParam"));
+    $("#search").val(GetQueryString("search"));
     var option = {
-        listUrl: "articleList?",
+        listUrl: "list?",
         totalPages: ${result.getPages()},
         page: ${result.getPageNum()},
         param: {
-            simpleQueryParam
+            search
         }
     };
     tg_basePage(option);

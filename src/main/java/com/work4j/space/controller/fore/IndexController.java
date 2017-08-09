@@ -1,6 +1,7 @@
 package com.work4j.space.controller.fore;
 
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,8 @@ import com.work4j.space.pojo.form.UserForm;
 import com.work4j.space.pojo.query.UserQuery;
 import com.work4j.space.service.ArticleService;
 import com.work4j.space.service.UserService;
+
+import java.util.List;
 
 @Controller
 public class IndexController {
@@ -42,7 +45,7 @@ public class IndexController {
         mav.addObject("msg", "注册成功");
         return mav;
     }
-    
+
     @RequestMapping(value = "/checkUserName", method = RequestMethod.POST)
     @ResponseBody
     public boolean checkUsername(String username) {
@@ -54,7 +57,7 @@ public class IndexController {
     @RequestMapping("/logout")
     public String toLogout() {
         SystemHelper.getSession().removeAttribute("currentUser");
-        return "redirect:/fore/article/articleList";
+        return "redirect:/fore/article/list";
     }
 
     @RequestMapping("/noPermission")
@@ -63,14 +66,19 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(String userName, String password) {
+    public ModelAndView login(final UserQuery query) {
         ModelAndView mav = new ModelAndView("login/login");
-        User user = userService.get(userName);
-        if (user != null) {
-            SystemHelper.setCurrentUser(user);
+        List<User> user = userService.find(query);
+        if (user.size() > 0) {
+            SystemHelper.setCurrentUser(user.get(0));
             mav.setViewName("redirect:index");
         } else {
-            mav.addObject("msg", "密码错误");
+            query.setPassword("");
+            if (userService.find(query).size() == 0) {
+                mav.addObject("msg", "没有此用户名");
+            } else {
+                mav.addObject("msg", "密码错误");
+            }
         }
         return mav;
     }

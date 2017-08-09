@@ -11,14 +11,14 @@
     <param-value>classpath:spring-mybatis.xml</param-value>
   </context-param>
   <!--SecurityFilter -->
-<!--  <filter>
+  <filter>
     <filter-name>SecurityFilter</filter-name>
     <filter-class>com.work4j.space.filter.SecurityFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>SecurityFilter</filter-name>
     <url-pattern>/admin/*</url-pattern>
-  </filter-mapping>-->
+  </filter-mapping>
   <!-- 编码过滤器 -->
   <filter>
     <filter-name>encodingFilter</filter-name>

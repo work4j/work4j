@@ -19,7 +19,7 @@ public class AdminAtricleController {
 	@Resource
 	private ArticleService articleService;
 
-	@RequestMapping(value = "/showArticleList", method = RequestMethod.GET)
+	@RequestMapping(value = "/showlist", method = RequestMethod.GET)
 	public ModelAndView testPage(ArticleQuery query) {
 		query.setLimit(10);
 		ModelAndView mav = new ModelAndView("modules/article/list");
@@ -35,7 +35,7 @@ public class AdminAtricleController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String add(ArticleForm form) {
 		articleService.add(form);
-		return "redirect:showArticleList";
+		return "redirect:showlist";
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -45,7 +45,7 @@ public class AdminAtricleController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String edit() {
-		return "redirect:showArticleList";
+		return "redirect:showlist";
 	}
 
 	@RequestMapping(value = "/delete_{id}", method = RequestMethod.GET)
