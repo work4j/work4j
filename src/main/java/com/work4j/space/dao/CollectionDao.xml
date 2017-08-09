@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work4j.space.dao.CollectionDao">
+    
+    <!-- 查询 Collection -->
+    <select id="find" parameterType="com.work4j.space.pojo.query.CollectionQuery" resultType="com.work4j.space.pojo.Collection">
+        SELECT * FROM collection_t ORDER BY create_data_time DESC
+    </select>
+    
+    <!-- 通过id得到一个 Collection-->
+    <select id="get" parameterType="string" resultType="com.work4j.space.pojo.Collection">
+        SELECT * FROM collection_t WHERE id = #{id}
+    </select>
+    
+    <!-- 新增 Collection -->
+    <insert id="add" parameterType="com.work4j.space.pojo.form.CollectionForm">
+        INSERT INTO collection_t (
+            id, user_id, article_id
+        )
+        VALUES(
+            #{id}, #{userId}, #{articleId}
+        )
+    </insert>
+    
+    <!-- 修改 Collection -->
+    <update id="update" parameterType="com.work4j.space.pojo.form.CollectionForm">
+        UPDATE collection_t SET
+            user_id = #{userId}, 
+            article_id = #{articleId}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除一个 Collection -->
+    <delete id="delete" parameterType="string">
+        DELETE FROM collection_t WHERE id = #{id}
+    </delete>
+
+    <!-- 修改状态-->
+    <update id="changeEnabled">
+        UPDATE collection_t SET enabled=#{enabled} WHERE id = #{id}
+    </update>
+</mapper>

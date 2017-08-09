@@ -37,7 +37,7 @@
 						</a>
 					</dd>
 					<dd class="${param.root=='tag'?'layui-this':''}">
-						<a href="${pageContext.request.contextPath}/admin/tag/list"> <i class="layui-icon" style="top: 3px;"></i><cite>便签管理</cite>
+						<a href="${pageContext.request.contextPath}/admin/tag/list"> <i class="layui-icon" style="top: 3px;"></i><cite>标签管理</cite>
 						</a>
 					</dd>
 					<dd class="${param.root=='tool'?'layui-this':''}">

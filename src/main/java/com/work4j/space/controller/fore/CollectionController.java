@@ -1,8 +1,8 @@
-package com.work4j.space.controller.admin;
+package com.work4j.space.controller.fore;
 
-import com.work4j.space.pojo.form.ToolForm;
-import com.work4j.space.pojo.query.ToolQuery;
-import com.work4j.space.service.ToolService;
+import com.work4j.space.pojo.form.CollectionForm;
+import com.work4j.space.pojo.query.CollectionQuery;
+import com.work4j.space.service.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,40 +15,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ToolController 
+ * CollectionController 
  */
 @Controller
-@RequestMapping("/tool")
-public class ToolController {
-    private static final String LIST_PAGE = "modules/tool/list";
-    private static final String ADD_PAGE = "modules/tool/add";
-    private static final String EDIT_PAGE = "modules/tool/edit";
+@RequestMapping("/collection")
+public class CollectionController {
+    private static final String LIST_PAGE = "modules/collection/list";
+    private static final String ADD_PAGE = "modules/collection/add";
+    private static final String EDIT_PAGE = "modules/collection/edit";
     @Autowired
-    private ToolService toolService;
+    private CollectionService collectionService;
     
     /**
-     *  Tool页面
+     *  Collection页面
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView listPage(final ToolQuery query){
+    public ModelAndView listPage(final CollectionQuery query){
         ModelAndView mav = new ModelAndView(LIST_PAGE);
-		mav.addObject("result", toolService.findByPage(query));
+		mav.addObject("result", collectionService.findByPage(query));
 		return mav;
     }
     
     /**
-     * 查询 Tool
+     * 查询 Collection
      */
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
     @ResponseBody
-   public ModelAndView listAllPage(final ToolQuery query){
+   public ModelAndView listAllPage(final CollectionQuery query){
         ModelAndView mav = new ModelAndView(LIST_PAGE);
-		mav.addObject("result", toolService.find(query));
+		mav.addObject("result", collectionService.find(query));
 		return mav;
     }
     
     /**
-     * 新增 Tool
+     * 新增 Collection
      */
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addPage() {
@@ -56,66 +56,62 @@ public class ToolController {
     }
     
     /**
-     * 新增 Tool
+     * 新增 Collection
      */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(final ToolForm form) {
-		toolService.add(form);
+	public String add(final CollectionForm form) {
+		collectionService.add(form);
 		return "redirect:list";
 	}
 	
     /**
-     * 修改 Tool
+     * 修改 Collection
      */
     @RequestMapping(value = "/edit_{id}", method = RequestMethod.GET)
     public ModelAndView editPage(@PathVariable("id") final String id) {
 		ModelAndView mav = new ModelAndView(EDIT_PAGE);
-        mav.addObject("result", toolService.get(id));
+        mav.addObject("result", collectionService.get(id));
 		return mav;
     }
     
     /**
-     * 修改 Tool
+     * 修改 Collection
      */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String edit(final ToolForm form) {
-		toolService.update(form);
+	public String edit(final CollectionForm form) {
+		collectionService.update(form);
 		return "redirect:list";
 	}
 	
 	/**
-     * 根据id删除 Tool
+     * 根据id删除 Collection
      */
-    @RequestMapping(value = "/delete_{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> delete(@PathVariable("id") final String id) {
+	@RequestMapping(value = "/delete_{id}", method = RequestMethod.GET)
+	public Map<String, Object> delete(@PathVariable("id") final String id) {
 		Map<String, Object> map = new HashMap<String, Object>();
-        toolService.delete(id);
-        map.put("success", true);
+        collectionService.delete(id);
         return map;
 	}	
 	
 	/**
-     * 启用 Tool
+     * 启用 Collection
      */
     @RequestMapping(value = "/enabled_{id}", method = RequestMethod.POST)
     @ResponseBody
     public final Map<String, Object> enabled(@PathVariable("id") final String id){
         Map<String, Object> map = new HashMap<String, Object>();
-        toolService.changeEnabled(id, 1);
-        map.put("success", true);
+        collectionService.changeEnabled(id, 1);
         return map;
     }
 	
 	/**
-     * 停用 Tool
+     * 停用 Collection
      */
     @RequestMapping(value = "/disabled_{id}", method = RequestMethod.POST)
     @ResponseBody
     public final Map<String, Object> disabled(@PathVariable("id") final String id){
 		Map<String, Object> map = new HashMap<String, Object>();
-        toolService.changeEnabled(id, 2);
-        map.put("success", true);
+        collectionService.changeEnabled(id, 2);
         return map;
     }
 }

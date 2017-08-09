@@ -1,6 +1,5 @@
 package com.work4j.space.controller.fore;
 
-import com.work4j.space.common.SystemHelper;
 import com.work4j.space.pojo.form.ReplyForm;
 import com.work4j.space.pojo.query.ReplyQuery;
 import com.work4j.space.service.ReplyService;
@@ -12,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ReplyController 
@@ -67,9 +67,11 @@ public class ReplyController {
     /**
      * 修改 Reply
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editPage() {
-        return EDIT_PAGE;
+    @RequestMapping(value = "/edit_{id}", method = RequestMethod.GET)
+    public ModelAndView editPage(@PathVariable("id") final String id) {
+		ModelAndView mav = new ModelAndView(EDIT_PAGE);
+        mav.addObject("result", replyService.get(id));
+		return mav;
     }
     
     /**
@@ -85,11 +87,10 @@ public class ReplyController {
      * 根据id删除 Reply
      */
 	@RequestMapping(value = "/delete_{id}", method = RequestMethod.GET)
-	public String delete(@PathVariable("id") final String id) {
-		replyService.delete(id);
-		HttpServletRequest request = SystemHelper.getRequest();
-		String url = request.getHeader("Referer");
-		return "redirect:" + url;
+	public Map<String, Object> delete(@PathVariable("id") final String id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+        replyService.delete(id);
+        return map;
 	}	
 	
 	/**
@@ -97,9 +98,10 @@ public class ReplyController {
      */
     @RequestMapping(value = "/enabled_{id}", method = RequestMethod.POST)
     @ResponseBody
-    public final boolean enabled(@PathVariable("id") final String id){
+    public final Map<String, Object> enabled(@PathVariable("id") final String id){
+        Map<String, Object> map = new HashMap<String, Object>();
         replyService.changeEnabled(id, 1);
-        return true;
+        return map;
     }
 	
 	/**
@@ -107,8 +109,9 @@ public class ReplyController {
      */
     @RequestMapping(value = "/disabled_{id}", method = RequestMethod.POST)
     @ResponseBody
-    public final boolean disabled(@PathVariable("id") final String id){
+    public final Map<String, Object> disabled(@PathVariable("id") final String id){
+		Map<String, Object> map = new HashMap<String, Object>();
         replyService.changeEnabled(id, 2);
-        return true;
+        return map;
     }
 }

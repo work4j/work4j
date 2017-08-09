@@ -23,7 +23,7 @@
                 </div>
                 <div class="detail-about">
                     <a class="jie-user" href="http://fly.layui.com/u/168/"> <img
-                            src="/programer/resources/others/layui/images/user03.jpg" alt="贤心"> <cite> ${result.title }
+                            src="/programer/resources/others/layui/images/user03.jpg" alt="贤心"> <cite> ${result.nickname }
                         <em>发布于<fmt:formatDate value="${result.releaseTime }" pattern="yyyy-MM-dd"/></em>
                     </cite>
                     </a>

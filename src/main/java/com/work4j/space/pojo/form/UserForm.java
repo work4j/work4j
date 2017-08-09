@@ -3,8 +3,9 @@ package com.work4j.space.pojo.form;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import java.util.UUID;
 
+import java.util.Date;
+import java.util.UUID;
 /**
  * UserForm 
  */
@@ -21,8 +22,8 @@ public class UserForm implements Serializable {
 	private String realName; // realName
 	private java.util.Date registerTime; // registerTime
 	private Integer userType; // userType
-	private Integer enabled; // enabled
-	private java.util.Date createDataTime; // createDataTime
+	private Integer enabled = 1; // enabled
+	private java.util.Date createDataTime = new Date(); // createDataTime
 	private String createDataUsername; // createDataUsername
 	private java.util.Date updateDataTime; // updateDataTime
 	private String updateDataUsername; // updateDataUsername

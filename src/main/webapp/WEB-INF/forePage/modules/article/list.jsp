@@ -35,7 +35,7 @@
                             <a href="detail_${item.id }">${item.title }</a> <span class="fly-tip-stick">置顶</span>
                         </h2>
                         <p>
-                            <span><a href="javascript:void(0)">${item.title }</a></span> <span><fmt:formatDate
+                            <span><a href="javascript:void(0)">${item.nickname }</a></span> <span><fmt:formatDate
                                 value="${item.releaseTime }" pattern="yyyy-MM-dd"/> </span> <span>未分类</span> <span
                                 class="fly-list-hint"> <i class="iconfont" title="回答"></i> ${item.replyNum } <i
                                 class="iconfont" title="人气"></i>

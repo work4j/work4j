@@ -72,6 +72,12 @@
                             </td>
                             <td style="text-align: center;">${item.name }</td>
                             <td style="text-align: center;">
+                                <a class="layui-btn layui-btn-small layui-btn-primary"
+                                   href="detail_${item.id}">
+                                    <i class="layui-icon">&#xe615;</i></a>
+                                <a class="layui-btn layui-btn-small"
+                                   href="edit_${item.id}">
+                                    <i class="layui-icon">&#xe642;</i></a>
                                 <a class="layui-btn layui-btn-small layui-btn-normal"
                                    onclick="del('delete_${item.id}')">
                                     <i class="layui-icon"> &#xe640;</i>
@@ -90,82 +96,10 @@
     <!-- 公告js文件 -->
     <jsp:include page="/WEB-INF/adminPage/common/import_js_admin.jsp"/>
 </div>
+<jsp:include page="/WEB-INF/adminPage/common/list_js_admin.jsp"/>
 <!-- 当前页js代码 -->
 <script type="text/javascript">
-    //分页查询
-    $("#search").val(GetQueryString("search"));
-    var option = {
-        listUrl: "list?",
-        totalPages: ${result.getPages()},
-        page: ${result.getPageNum()},
-        param: {
-            search
-        }
-    };
-    tg_basePage(option);
-    //分页查询
-    form.on('switch(filter)', function (data) {
-        var id = data.elem.id;
-        if (!$("#" + id).prop("checked")) {
-            layer.confirm('您确定要停用此数据吗？', {
-                btn: ['确定', '取消']
-            }, function () {
-                //停用
-                tg_simpleAjaxPost('disabled_' + id, null, function () {
-                    $("#" + id).next().removeClass("layui-form-onswitch");
-                    layer.msg('停用成功！', {
-                        time : 1000,
-                        icon : 1
-                    });
-                }, function () {
-                    $("#" + id).prop("checked", true);
-                    $("#" + id).next().addClass("layui-form-onswitch");
-                    layer.msg('停用失败！', {
-                        time : 1000,
-                        icon : 2
-                    });
-                });
-            }, function () {
-                $("#" + id).prop("checked", true);
-                $("#" + id).next().addClass("layui-form-onswitch");
-            });
-        } else if ($("#" + id).prop("checked")) {
-            layer.confirm('您确定要启用此数据吗？', {
-                btn: ['确定', '取消']
-            }, function () {
-                //启用
-                tg_simpleAjaxPost('enabled_' + data.elem.id, null, function () {
-                    $("#" + id).next().addClass("layui-form-onswitch");
-                    layer.msg('启用成功！', {
-                        time : 1000,
-                        icon : 1
-                    });
-                }, function () {
-                    $("#" + id).prop("checked", false);
-                    $("#" + id).next().removeClass("layui-form-onswitch");
-                    layer.msg('启用失败！', {
-                        time : 1000,
-                        icon : 2
-                    });
-                });
-            }, function () {
-                $("#" + id).prop("checked", false);
-                $("#" + id).next().removeClass("layui-form-onswitch");
-            });
-        }
-    });
 
-    function del(url) {
-        tg_deleteItem(url, function () {
-            layer.msg('删除成功！', {
-                time : 1000,
-                icon : 1
-            });
-            setTimeout(function () {
-                location.reload();
-            }, 1000)
-        });
-    }
 </script>
 </body>
 </html>

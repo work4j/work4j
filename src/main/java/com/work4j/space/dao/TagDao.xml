@@ -33,7 +33,6 @@
     <update id="update" parameterType="com.work4j.space.pojo.form.TagForm">
         UPDATE tag_t SET
             name = #{name},
-            enabled = #{enabled},
             update_data_time = #{updateDataTime},
             update_data_username = #{updateDataUsername}
         WHERE id = #{id}

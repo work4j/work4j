@@ -3,8 +3,9 @@ package com.work4j.space.pojo.form;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import java.util.UUID;
 
+import java.util.Date;
+import java.util.UUID;
 /**
  * TagForm 
  */
@@ -15,8 +16,8 @@ public class TagForm implements Serializable {
     
 	private String id = UUID.randomUUID().toString().replaceAll("-", "");
 	private String name; // name
-	private Integer enabled; // enabled
-	private java.util.Date createDataTime; // createDataTime
+	private Integer enabled = 1; // enabled
+	private java.util.Date createDataTime = new Date(); // createDataTime
 	private String createDataUsername; // createDataUsername
 	private java.util.Date updateDataTime; // updateDataTime
 	private String updateDataUsername; // updateDataUsername

@@ -1,6 +1,5 @@
 package com.work4j.space.controller.fore;
 
-import com.work4j.space.common.SystemHelper;
 import com.work4j.space.pojo.form.TagForm;
 import com.work4j.space.pojo.query.TagQuery;
 import com.work4j.space.service.TagService;
@@ -12,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * TagController 
@@ -67,9 +67,11 @@ public class TagController {
     /**
      * 修改 Tag
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editPage() {
-        return EDIT_PAGE;
+    @RequestMapping(value = "/edit_{id}", method = RequestMethod.GET)
+    public ModelAndView editPage(@PathVariable("id") final String id) {
+		ModelAndView mav = new ModelAndView(EDIT_PAGE);
+        mav.addObject("result", tagService.get(id));
+		return mav;
     }
     
     /**
@@ -85,11 +87,10 @@ public class TagController {
      * 根据id删除 Tag
      */
 	@RequestMapping(value = "/delete_{id}", method = RequestMethod.GET)
-	public String delete(@PathVariable("id") final String id) {
-		tagService.delete(id);
-		HttpServletRequest request = SystemHelper.getRequest();
-		String url = request.getHeader("Referer");
-		return "redirect:" + url;
+	public Map<String, Object> delete(@PathVariable("id") final String id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+        tagService.delete(id);
+        return map;
 	}	
 	
 	/**
@@ -97,9 +98,10 @@ public class TagController {
      */
     @RequestMapping(value = "/enabled_{id}", method = RequestMethod.POST)
     @ResponseBody
-    public final boolean enabled(@PathVariable("id") final String id){
+    public final Map<String, Object> enabled(@PathVariable("id") final String id){
+        Map<String, Object> map = new HashMap<String, Object>();
         tagService.changeEnabled(id, 1);
-        return true;
+        return map;
     }
 	
 	/**
@@ -107,8 +109,9 @@ public class TagController {
      */
     @RequestMapping(value = "/disabled_{id}", method = RequestMethod.POST)
     @ResponseBody
-    public final boolean disabled(@PathVariable("id") final String id){
+    public final Map<String, Object> disabled(@PathVariable("id") final String id){
+		Map<String, Object> map = new HashMap<String, Object>();
         tagService.changeEnabled(id, 2);
-        return true;
+        return map;
     }
 }

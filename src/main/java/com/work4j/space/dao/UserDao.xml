@@ -39,7 +39,6 @@
             real_name = #{realName},
             register_time = #{registerTime},
             user_type = #{userType},
-            enabled = #{enabled},
             update_data_time = #{updateDataTime},
             update_data_username = #{updateDataUsername}
         WHERE id = #{id}

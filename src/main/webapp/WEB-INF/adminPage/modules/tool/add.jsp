@@ -28,12 +28,18 @@
 				<!--/*******操作*******/-->
 				<form action="add" method="post" class="layui-form">
 					<fieldset class="layui-elem-field layui-field-title">
-						<legend>内容管理——新增常用工具</legend>
+						<legend>新增常用工具</legend>
 					</fieldset>
 					<div class="layui-form-item">
 						<label class="layui-form-label">名称：<span style="color: red">*</span></label>
 						<div class="layui-input-block">
-							<input maxlength="45" type="text" name="name" lay-verify="name" autocomplete="off" placeholder="请输入名称" class="layui-input">
+							<input maxlength="45" type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入名称" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">地址：<span style="color: red">*</span></label>
+						<div class="layui-input-block">
+							<input value="http://www." maxlength="255" type="text" name="link" lay-verify="url" autocomplete="off" placeholder="请输入地址" class="layui-input">
 						</div>
 					</div>
 					<div class="layui-form-item">
@@ -52,15 +58,6 @@
 	</div>
 	<!-- 当前页js代码 -->
 	<script type="text/javascript">
-	     //自定义验证规则
-	     var rules = {
-             name : function(value) {
-                 if (value.length < 2 || value.length > 45) {
-                     return '标题在2~45个字符之间';
-                 }
-             }
-	     };
-	     form.verify(rules);
 	     //监听提交
 	      form.on('submit(submit1)', function(data) {
 	     });

@@ -23,4 +23,6 @@ public class Article implements Serializable {
     private String createDataUsername; // createDataUsername
     private java.util.Date updateDataTime; // updateDataTime
     private String updateDataUsername; // updateDataUsername
+
+    private String nickname; // 用户昵称
 }

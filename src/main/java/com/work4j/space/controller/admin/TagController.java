@@ -1,27 +1,18 @@
 package com.work4j.space.controller.admin;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
+import com.work4j.space.pojo.form.TagForm;
+import com.work4j.space.pojo.query.TagQuery;
+import com.work4j.space.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import com.github.pagehelper.Page;
-import com.work4j.space.common.SystemHelper;
-import com.work4j.space.pojo.form.TagForm;
-import com.work4j.space.pojo.query.TagQuery;
-import com.work4j.space.service.TagService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * TagController 
@@ -76,9 +67,11 @@ public class TagController {
     /**
      * 修改 Tag
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editPage() {
-        return EDIT_PAGE;
+    @RequestMapping(value = "/edit_{id}", method = RequestMethod.GET)
+    public ModelAndView editPage(@PathVariable("id") final String id) {
+		ModelAndView mav = new ModelAndView(EDIT_PAGE);
+        mav.addObject("result", tagService.get(id));
+		return mav;
     }
     
     /**
@@ -93,12 +86,13 @@ public class TagController {
 	/**
      * 根据id删除 Tag
      */
-	@RequestMapping(value = "/delete_{id}", method = RequestMethod.GET)
-	public String delete(@PathVariable("id") final String id) {
-		tagService.delete(id);
-		HttpServletRequest request = SystemHelper.getRequest();
-		String url = request.getHeader("Referer");
-		return "redirect:" + url;
+    @RequestMapping(value = "/delete_{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> delete(@PathVariable("id") final String id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+        tagService.delete(id);
+        map.put("success", true);
+        return map;
 	}	
 	
 	/**
@@ -106,9 +100,11 @@ public class TagController {
      */
     @RequestMapping(value = "/enabled_{id}", method = RequestMethod.POST)
     @ResponseBody
-    public final boolean enabled(@PathVariable("id") final String id){
+    public final Map<String, Object> enabled(@PathVariable("id") final String id){
+        Map<String, Object> map = new HashMap<String, Object>();
         tagService.changeEnabled(id, 1);
-        return true;
+        map.put("success", true);
+        return map;
     }
 	
 	/**
@@ -116,8 +112,10 @@ public class TagController {
      */
     @RequestMapping(value = "/disabled_{id}", method = RequestMethod.POST)
     @ResponseBody
-    public final boolean disabled(@PathVariable("id") final String id){
+    public final Map<String, Object> disabled(@PathVariable("id") final String id){
+		Map<String, Object> map = new HashMap<String, Object>();
         tagService.changeEnabled(id, 2);
-        return true;
+        map.put("success", true);
+        return map;
     }
 }

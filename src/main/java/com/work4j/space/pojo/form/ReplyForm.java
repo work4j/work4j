@@ -3,8 +3,9 @@ package com.work4j.space.pojo.form;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import java.util.UUID;
 
+import java.util.Date;
+import java.util.UUID;
 /**
  * ReplyForm 
  */
@@ -18,9 +19,9 @@ public class ReplyForm implements Serializable {
 	private String articleId; // articleId
 	private String content; // content
 	private java.util.Date replyTime; // replyTime
-	private java.util.Date createDataTime; // createDataTime
+	private java.util.Date createDataTime = new Date(); // createDataTime
 	private String createDataUsername; // createDataUsername
 	private java.util.Date updateDataTime; // updateDataTime
 	private String updateDataUsername; // updateDataUsername
-	private Integer enabled; // enabled
+	private Integer enabled = 1; // enabled
 }

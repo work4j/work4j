@@ -34,7 +34,6 @@
         UPDATE tool_t SET
             name = #{name},
             link = #{link},
-            enabled = #{enabled},
             update_data_time = #{updateDataTime},
             update_data_username = #{updateDataUsername},
             description = #{description}

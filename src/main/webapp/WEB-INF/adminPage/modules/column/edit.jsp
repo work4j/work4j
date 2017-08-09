@@ -1,18 +1,18 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 	<title>修改栏目</title>
 	<!-- 头部 -->
-	<%@ include file="../../common/head_admin.jsp"%>
+	<%@ include file="../../common/head_admin.jsp" %>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
 	<!-- 导航栏 -->
-	<jsp:include page="../../common/nav_admin.jsp" />
+	<jsp:include page="../../common/nav_admin.jsp"/>
 	<!-- 菜单栏  param::root 菜单栏选项卡定位参数 -->
 	<jsp:include page="../../common/menu_admin.jsp" flush="true">
-		<jsp:param value="column" name="root" />
+		<jsp:param value="column" name="root"/>
 	</jsp:include>
 	<!-- 内容 -->
 	<div class="layui-body site-demo">
@@ -26,14 +26,16 @@
 				<i class="layui-icon">&#xe60b;</i> 啦啦啦，修改栏目。
 			</blockquote>
 			<!--/*******操作*******/-->
-			<form action="add" method="post" class="layui-form">
+			<form action="edit" method="post" class="layui-form">
+				<input value="${result.id}" name="id" type="text" hidden="hidden" />
 				<fieldset class="layui-elem-field layui-field-title">
-					<legend>内容管理——修改栏目</legend>
+					<legend>修改栏目</legend>
 				</fieldset>
 				<div class="layui-form-item">
 					<label class="layui-form-label">名称：<span style="color: red">*</span></label>
 					<div class="layui-input-block">
-						<input maxlength="45" type="text" name="name" value="${name}" lay-verify="name" autocomplete="off" placeholder="请输入名称" class="layui-input">
+						<input value="${result.name}" maxlength="45" type="text" name="name" lay-verify="required" autocomplete="off"
+							   placeholder="请输入名称" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -46,23 +48,14 @@
 		</div>
 	</div>
 	<!-- 底部 -->
-	<jsp:include page="../../common/footer_admin.jsp" />
+	<jsp:include page="../../common/footer_admin.jsp"/>
 	<!-- 公告js文件 -->
-	<jsp:include page="../../common/import_js_admin.jsp" />
+	<jsp:include page="../../common/import_js_admin.jsp"/>
 </div>
 <!-- 当前页js代码 -->
 <script type="text/javascript">
-    //自定义验证规则
-    var rules = {
-        name : function(value) {
-            if (value.length < 2 || value.length > 45) {
-                return '标题在2~45个字符之间';
-            }
-        }
-    };
-    form.verify(rules);
     //监听提交
-    form.on('submit(submit1)', function(data) {
+    form.on('submit(submit1)', function (data) {
     });
 </script>
 </body>
