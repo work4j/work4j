@@ -48,6 +48,7 @@ public class ArticleController {
         ColumnQuery columnQuery = new ColumnQuery();
         columnQuery.setEnabled(1);
         mav.addObject("columns", columnService.find(columnQuery));
+        mav.addObject("column", query.getColumn());
         return mav;
     }
 

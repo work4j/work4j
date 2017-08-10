@@ -13,8 +13,10 @@
     <div class="wrap">
         <div class="content">
             <div class="fly-tab fly-tab-index">
-					<span> <a class="tab-this" href="javascript:void(0);">全部</a> <a href="javascript:void(0);">待定</a> <a
-                            href="javascript:void(0);">待定</a> <a href="javascript:void(0);">待定</a>
+                <span> <a ${column == null ?"class=tab-this":""} href="list">全部</a>
+                    <c:forEach var="item" items="${columns}">
+                        <a ${column == item.code ?"class=tab-this":""} href="list?column=${item.code}">${item.name}</a>
+                    </c:forEach>
 					</span>
                 <form class="fly-search">
                     <i class="iconfont icon-sousuo"></i> <input class="layui-input" autocomplete="off"
@@ -29,7 +31,8 @@
                 </c:if>
                 <c:forEach var="item" items="${result }" varStatus="items">
                     <li class="fly-list-li"><a href="javascript:void(0)" class="fly-list-avatar"> <img
-                            src="http://q.qlogo.cn/qqapp/101235792/3F2CF40CCA8313F4CC8C4A7044B2ADB4/100" alt="${item.nickname}">
+                            src="http://q.qlogo.cn/qqapp/101235792/3F2CF40CCA8313F4CC8C4A7044B2ADB4/100"
+                            alt="${item.nickname}">
                     </a>
                         <h2 class="fly-tip">
                             <a href="detail_${item.id }">${item.title }</a> <span class="fly-tip-stick">置顶</span>
@@ -39,8 +42,8 @@
                                 value="${item.releaseTime }" pattern="yyyy-MM-dd"/> </span>
                             <c:forEach var="tag" items="${item.tags}"><span>${tag.name}</span></c:forEach>
                             <span
-                                class="fly-list-hint"> <i class="iconfont" title="回答"></i> ${item.replyNum } <i
-                                class="iconfont" title="人气"></i>
+                                    class="fly-list-hint"> <i class="iconfont" title="回答"></i> ${item.replyNum } <i
+                                    class="iconfont" title="人气"></i>
 									${item.seeNum }
 								</span>
                         </p></li>
