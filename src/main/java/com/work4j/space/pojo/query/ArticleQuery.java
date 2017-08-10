@@ -26,7 +26,10 @@ public class ArticleQuery implements Serializable {
     private String createDataUsername; // createDataUsername
     private java.util.Date updateDataTime = new Date(); // updateDataTime
     private String updateDataUsername; // updateDataUsername
-	
+
+    private String column;
+    private String tag;
+
     private Integer page = 1;
     private Integer limit = 20;
     private String search;

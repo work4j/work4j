@@ -1,12 +1,31 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.work4j.space.dao.ArticleDao">
+    <resultMap type="com.work4j.space.pojo.Article" id="article">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="userId" column="user_id"/>
+        <result property="releaseTime" column="release_time"/>
+        <result property="seeNum" column="see_num"/>
+        <result property="replyNum" column="replyNum"/>
+        <result property="columnId" column="column_id"/>
+        <result property="enabled" column="enabled"/>
+        <result property="nickname" column="nickname"/>
+        <collection property="tags" ofType="com.work4j.space.pojo.Tag" select="selectTag" column="tag_id">
+        </collection>
+    </resultMap>
 
     <!-- 查询 Article -->
-    <select id="find" parameterType="com.work4j.space.pojo.query.ArticleQuery" resultType="com.work4j.space.pojo.Article">
+    <select id="find" parameterType="com.work4j.space.pojo.query.ArticleQuery"
+            resultMap="article">
         SELECT t.*,u.nickname,(SELECT count(1) FROM reply_t rep WHERE rep.article_id = t.id) as replyNum FROM article_t t
         LEFT JOIN user_t u ON u.id = t.user_id
+        LEFT JOIN column_t c ON c.id = t.column_id
+        LEFT JOIN article_tag_t att ON att.article_id = t.id
+        LEFT JOIN tag_t ta ON ta.id = att.tag_id
         <where>
             <if test="search != null and search != ''">
                 AND t.title LIKE CONCAT('%',#{search},'%')
@@ -14,8 +33,21 @@
             <if test="columnId != null and columnId != ''">
                 AND t.column_id = #{columnId}
             </if>
+            <if test="column != null and column != ''">
+                AND c.code = #{column}
+            </if>
+            <if test="tag != null and tag != ''">
+                AND ta.code = #{tag}
+            </if>
         </where>
         ORDER BY t.create_data_time DESC
+    </select>
+
+    <!-- 查询 Tag -->
+    <select id="selectTag" parameterType="string"
+            resultType="com.work4j.space.pojo.Tag">
+        SELECT * FROM tag_t
+        WHERE id = #{id}
     </select>
 
     <!-- 通过id得到一个 Article-->

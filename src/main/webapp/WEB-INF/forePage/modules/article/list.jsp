@@ -29,7 +29,7 @@
                 </c:if>
                 <c:forEach var="item" items="${result }" varStatus="items">
                     <li class="fly-list-li"><a href="javascript:void(0)" class="fly-list-avatar"> <img
-                            src="<%=basePath%>resources/others/layui/images/user03.jpg" alt="贤心">
+                            src="http://q.qlogo.cn/qqapp/101235792/3F2CF40CCA8313F4CC8C4A7044B2ADB4/100" alt="${item.nickname}">
                     </a>
                         <h2 class="fly-tip">
                             <a href="detail_${item.id }">${item.title }</a> <span class="fly-tip-stick">置顶</span>
@@ -55,7 +55,7 @@
             <div class="user-looklog leifeng-rank">
 				<span> <c:forEach var="item" items="${top12 }" varStatus="items">
 						<a href="javacript:void(0);" onclick="layer.msg('功能开发中')"> <img
-                                src="<%=basePath%>resources/others/layui/images/user03.jpg"> <cite>${item.nickname }</cite> <i>${item.articleNum }次发帖</i>
+                                src="http://q.qlogo.cn/qqapp/101235792/3F2CF40CCA8313F4CC8C4A7044B2ADB4/100"> <cite>${item.nickname }</cite> <i>${item.articleNum }次发帖</i>
 						</a>
                 </c:forEach>
 				</span>

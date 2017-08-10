@@ -1,6 +1,8 @@
 package com.work4j.space.pojo;
 
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 
 /**
@@ -25,4 +27,5 @@ public class Article implements Serializable {
     private String updateDataUsername; // updateDataUsername
 
     private String nickname; // 用户昵称
+    private List<Tag> tags; //标签
 }

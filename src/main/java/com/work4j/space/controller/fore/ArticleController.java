@@ -4,8 +4,10 @@ import com.work4j.space.common.SystemHelper;
 import com.work4j.space.pojo.Article;
 import com.work4j.space.pojo.form.ArticleForm;
 import com.work4j.space.pojo.query.ArticleQuery;
+import com.work4j.space.pojo.query.ColumnQuery;
 import com.work4j.space.pojo.query.ReplyQuery;
 import com.work4j.space.service.ArticleService;
+import com.work4j.space.service.ColumnService;
 import com.work4j.space.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,8 @@ public class ArticleController {
     private ArticleService articleService;
     @Autowired
     private ReplyService replyService;
+    @Autowired
+    private ColumnService columnService;
 
     /**
      * Article页面
@@ -41,6 +45,9 @@ public class ArticleController {
     public ModelAndView listPage(final ArticleQuery query) {
         ModelAndView mav = new ModelAndView(LIST_PAGE);
         mav.addObject("result", articleService.findByPage(query));
+        ColumnQuery columnQuery = new ColumnQuery();
+        columnQuery.setEnabled(1);
+        mav.addObject("columns", columnService.find(columnQuery));
         return mav;
     }
 
