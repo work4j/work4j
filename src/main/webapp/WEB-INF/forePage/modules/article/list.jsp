@@ -36,7 +36,9 @@
                         </h2>
                         <p>
                             <span><a href="javascript:void(0)">${item.nickname }</a></span> <span><fmt:formatDate
-                                value="${item.releaseTime }" pattern="yyyy-MM-dd"/> </span> <span>未分类</span> <span
+                                value="${item.releaseTime }" pattern="yyyy-MM-dd"/> </span>
+                            <c:forEach var="tag" items="${item.tags}"><span>${tag.name}</span></c:forEach>
+                            <span
                                 class="fly-list-hint"> <i class="iconfont" title="回答"></i> ${item.replyNum } <i
                                 class="iconfont" title="人气"></i>
 									${item.seeNum }
