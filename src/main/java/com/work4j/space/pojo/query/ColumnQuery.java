@@ -15,6 +15,7 @@ public class ColumnQuery implements Serializable {
     
     private String id; // id
     private String name; // name
+    private String code; // code
     private Integer enabled; // enabled
     private java.util.Date createDataTime; // createDataTime
     private String createDataUsername; // createDataUsername

@@ -38,6 +38,13 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label">代码：<span style="color: red">*</span></label>
+                    <div class="layui-input-block">
+                        <input maxlength="45" type="text" name="code" lay-verify="required" autocomplete="off"
+                               placeholder="请输入代码" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn" lay-submit="" lay-filter="submit1">立即提交</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>

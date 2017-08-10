@@ -40,4 +40,9 @@ public interface ArticleDao {
      * 修改是否可用
      */
     int changeEnabled(@Param("id") final String id, @Param("enabled") final Integer enabled);
+
+    /**
+     * 修改seeNum
+     */
+    int updateSeeNum(final String id);
 }

@@ -45,4 +45,9 @@ public interface ArticleService {
      * 修改是否可用
      */
     int changeEnabled(final String id, final Integer enabled);
+
+    /**
+     * 修改 seeNum
+     */
+    int updateSeeNum(final String id);
 }

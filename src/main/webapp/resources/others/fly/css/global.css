@@ -365,15 +365,15 @@ body .fly-user-main{position: relative; width: 1085px; min-height: 600px; margin
 .jieda-body{margin: 25px 0 20px; min-height: 0; line-height: 24px; font-size:14px;}
 .jieda-body p{margin-bottom: 10px;}
 .jieda-body a{color:#4f99cf}
-.jieda-reply{position:relative;}
-.jieda-reply span{padding-right:20px; color:#999; cursor:pointer;}
-.jieda-reply span:hover{color:#666;}
-.jieda-reply span i{margin-right:5px; font-size:16px;}
-.jieda-reply span em{font-style: normal;}
-.jieda-reply span .icon-zan{font-size: 22px;}
-.jieda-reply .zanok,
-.jieda-reply .jieda-zan:hover{color:#c00}
-.jieda-reply span .icon-svgmoban53{position: relative; top: 1px;}
+.jieda-reply-my{position:relative;}
+.jieda-reply-my span{padding-right:20px; color:#999; cursor:pointer;}
+.jieda-reply-my span:hover{color:#666;}
+.jieda-reply-my span i{margin-right:5px; font-size:16px;}
+.jieda-reply-my span em{font-style: normal;}
+.jieda-reply-my span .icon-zan{font-size: 22px;}
+.jieda-reply-my .zanok,
+.jieda-reply-my .jieda-zan:hover{color:#c00}
+.jieda-reply-my span .icon-svgmoban53{position: relative; top: 1px;}
 
 
 /* 广告 */

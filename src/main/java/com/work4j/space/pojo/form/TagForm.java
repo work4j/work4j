@@ -16,6 +16,7 @@ public class TagForm implements Serializable {
     
 	private String id = UUID.randomUUID().toString().replaceAll("-", "");
 	private String name; // name
+	private String code; // code
 	private Integer enabled = 1; // enabled
 	private java.util.Date createDataTime = new Date(); // createDataTime
 	private String createDataUsername; // createDataUsername

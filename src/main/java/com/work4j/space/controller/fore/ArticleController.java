@@ -59,9 +59,9 @@ public class ArticleController {
      * 新增 Article
      */
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addPage() {
+    public String addPage(HttpServletRequest request) {
         if (SystemHelper.getCurrentUser() == null) {
-            return "redirect:list";
+            return "redirect:/fore/login?redirect=" + request.getRequestURI();
         }
         return ADD_PAGE;
     }
@@ -71,7 +71,6 @@ public class ArticleController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(final ArticleForm form) {
-        form.setUserId(SystemHelper.getCurrentUser().getId());
         articleService.add(form);
         return "redirect:list";
     }
@@ -80,13 +79,21 @@ public class ArticleController {
      * 修改 Article
      */
     @RequestMapping(value = "/edit_{id}", method = RequestMethod.GET)
-    public ModelAndView editPage(@PathVariable("id") final String id) {
+    public ModelAndView editPage(HttpServletRequest request, @PathVariable("id") final String id) {
         ModelAndView mav = new ModelAndView(EDIT_PAGE);
         Article result = articleService.get(id);
-        if (SystemHelper.getCurrentUser() != null || result == null || !SystemHelper.getCurrentUser().getId().equals(result.getUserId())) {
-            mav.addObject("result", new Article());
+        if (SystemHelper.getCurrentUser() == null) {
+            mav.setViewName("redirect:/fore/login?redirect=" + request.getRequestURI());
+            return mav;
+        }
+        if (result != null) {
+            if (!SystemHelper.getCurrentUser().getId().equals(result.getUserId())) {
+                mav.setViewName("redirect:/fore/noPermission");
+            } else {
+                mav.addObject("result", result);
+            }
         } else {
-            mav.addObject("result", result);
+            mav.setViewName("redirect:/fore/404");
         }
         return mav;
     }
@@ -97,7 +104,7 @@ public class ArticleController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String edit(final ArticleForm form) {
         articleService.update(form);
-        return "redirect:list";
+        return "redirect:detail_" + form.getId();
     }
 
     /**
@@ -106,9 +113,15 @@ public class ArticleController {
     @RequestMapping(value = "/detail_{id}", method = RequestMethod.GET)
     public ModelAndView detail(@PathVariable("id") final String id, ReplyQuery query) {
         ModelAndView mav = new ModelAndView(DETAIL_PAGE);
-        mav.addObject("result", articleService.get(id));
-        query.setArticleId(id);
-        mav.addObject("replys", replyService.findByPage(query));
+        Article result = articleService.get(id);
+        if (result != null) {
+            mav.addObject("result", result);
+            query.setArticleId(id);
+            mav.addObject("replys", replyService.findByPage(query));
+            articleService.updateSeeNum(id);
+        } else {
+            mav.setViewName("redirect:/fore/404");
+        }
         return mav;
     }
 

@@ -17,6 +17,7 @@ public class ReplyQuery implements Serializable {
     private String userId; // userId
     private String articleId; // articleId
     private String content; // content
+    private String toReplyId; // toReplyId
     private java.util.Date replyTime; // replyTime
     private java.util.Date createDataTime; // createDataTime
     private String createDataUsername; // createDataUsername

@@ -17,7 +17,7 @@ public class Article implements Serializable {
     private java.util.Date releaseTime; // releaseTime
     private Integer seeNum; // seeNum
     private Integer replyNum; // replyNum
-    private String htmlContent; // htmlContent
+    private String columnId; // columnId
     private Integer enabled; // enabled
     private java.util.Date createDataTime; // createDataTime
     private String createDataUsername; // createDataUsername

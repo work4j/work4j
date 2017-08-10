@@ -1,5 +1,6 @@
 package com.work4j.space.service.impl;
 
+import com.work4j.space.common.SystemHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -46,6 +47,7 @@ public class ReplyServiceImpl implements ReplyService {
      * 新增 Reply
      */
     public void add(final ReplyForm form) {
+        form.setUserId(SystemHelper.getCurrentUser().getId());
         replyDao.add(form);
     }
 

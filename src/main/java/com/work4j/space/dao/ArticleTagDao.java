@@ -35,7 +35,17 @@ public interface ArticleTagDao {
      * 删除一个 ArticleTag
      */
     int delete(final String id);
-    
+
+    /**
+     * 删除 ArticleTag
+     */
+    int deleteByArticleId(@Param("articleId") final String articleId);
+
+    /**
+     * 删除 ArticleTag
+     */
+    int deleteByTagId(@Param("tagId") final String tagId);
+
     /**
      * 修改是否可用
      */

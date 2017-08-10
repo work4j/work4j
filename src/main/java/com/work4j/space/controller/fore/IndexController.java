@@ -1,6 +1,7 @@
 package com.work4j.space.controller.fore;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,18 +61,29 @@ public class IndexController {
         return "redirect:/fore/article/list";
     }
 
+    @RequestMapping("/404")
+    public String error() {
+        return "error_404";
+    }
+
     @RequestMapping("/noPermission")
     public String noPermission() {
         return "noPermission";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(final UserQuery query) {
+    public ModelAndView login(HttpServletRequest request, final UserQuery query) {
         ModelAndView mav = new ModelAndView("login/login");
         List<User> user = userService.find(query);
         if (user.size() > 0) {
             SystemHelper.setCurrentUser(user.get(0));
-            mav.setViewName("redirect:index");
+            String referer = request.getHeader("referer");
+            String url = referer.substring(referer.indexOf("redirect") + 9, referer.length());
+            if (url != null && !url.equals("")) {
+                mav.setViewName("redirect:" +  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + url);
+            } else {
+                mav.setViewName("redirect:index");
+            }
         } else {
             query.setPassword("");
             if (userService.find(query).size() == 0) {

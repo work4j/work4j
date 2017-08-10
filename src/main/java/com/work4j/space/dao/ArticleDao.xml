@@ -11,6 +11,9 @@
             <if test="search != null and search != ''">
                 AND t.title LIKE CONCAT('%',#{search},'%')
             </if>
+            <if test="columnId != null and columnId != ''">
+                AND t.column_id = #{columnId}
+            </if>
         </where>
         ORDER BY t.create_data_time DESC
     </select>
@@ -25,10 +28,10 @@
     <!-- 新增 Article -->
     <insert id="add" parameterType="com.work4j.space.pojo.form.ArticleForm">
         INSERT INTO article_t  (
-            id, title, content, user_id, release_time, see_num, reply_num, enabled, create_data_time, create_data_username, update_data_time, update_data_username
+            id, title, content, user_id, release_time, see_num, column_id, enabled, create_data_time, create_data_username, update_data_time, update_data_username
         )
         VALUES(
-            #{id}, #{title}, #{content}, #{userId}, #{releaseTime}, #{seeNum}, #{replyNum}, #{enabled}, #{createDataTime}, #{createDataUsername}, #{updateDataTime}, #{updateDataUsername}
+            #{id}, #{title}, #{content}, #{userId}, #{releaseTime}, #{seeNum}, #{columnId}, #{enabled}, #{createDataTime}, #{createDataUsername}, #{updateDataTime}, #{updateDataUsername}
         )
     </insert>
 
@@ -37,9 +40,10 @@
         UPDATE article_t  SET
             title = #{title},
             content = #{content},
+            column_id = #{columnId},
             update_data_time = #{updateDataTime},
             update_data_username = #{updateDataUsername}
-        WHERE id = #{id}
+        WHERE id = #{id} AND user_id = #{userId}
     </update>
 
     <!-- 删除一个 Article -->
@@ -50,5 +54,10 @@
     <!-- 修改状态-->
     <update id="changeEnabled">
         UPDATE article_t  SET enabled=#{enabled} WHERE id = #{id}
+    </update>
+
+    <!-- 修改seeNum-->
+    <update id="updateSeeNum">
+        UPDATE article_t  SET see_num = see_num + 1 WHERE id = #{id}
     </update>
 </mapper>

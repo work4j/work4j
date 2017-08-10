@@ -18,7 +18,8 @@ public class ReplyForm implements Serializable {
 	private String userId; // userId
 	private String articleId; // articleId
 	private String content; // content
-	private java.util.Date replyTime; // replyTime
+	private String toReplyId; // toReplyId
+	private java.util.Date replyTime = new Date(); // replyTime
 	private java.util.Date createDataTime = new Date(); // createDataTime
 	private String createDataUsername; // createDataUsername
 	private java.util.Date updateDataTime; // updateDataTime

@@ -22,10 +22,10 @@
     <!-- 新增 Column -->
     <insert id="add" parameterType="com.work4j.space.pojo.form.ColumnForm">
         INSERT INTO column_t  (
-            id, name, enabled, create_data_time, create_data_username, update_data_time, update_data_username
+            id, name, code, enabled, create_data_time, create_data_username, update_data_time, update_data_username
         )
         VALUES(
-            #{id}, #{name}, #{enabled}, #{createDataTime}, #{createDataUsername}, #{updateDataTime}, #{updateDataUsername}
+            #{id}, #{name}, #{code}, #{enabled}, #{createDataTime}, #{createDataUsername}, #{updateDataTime}, #{updateDataUsername}
         )
     </insert>
     
@@ -33,6 +33,7 @@
     <update id="update" parameterType="com.work4j.space.pojo.form.ColumnForm">
         UPDATE column_t  SET
             name = #{name},
+            code = #{code},
             update_data_time = #{updateDataTime},
             update_data_username = #{updateDataUsername}
         WHERE id = #{id}

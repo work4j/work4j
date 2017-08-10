@@ -20,11 +20,13 @@ public class ArticleForm implements Serializable {
 	private String content; // content
 	private String userId; // userId
 	private java.util.Date releaseTime = new Date(); // releaseTime
-	private Integer seeNum; // seeNum
-	private Integer replyNum; // replyNum
+	private Integer seeNum = 0; // seeNum
+	private String columnId; // columnId
 	private Integer enabled = 1; // enabled
 	private java.util.Date createDataTime = new Date(); // createDataTime
 	private String createDataUsername; // createDataUsername
 	private java.util.Date updateDataTime; // updateDataTime
 	private String updateDataUsername; // updateDataUsername
+
+	private String tags; //标签
 }
