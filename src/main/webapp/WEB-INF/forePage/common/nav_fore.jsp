@@ -14,8 +14,8 @@
 			<a class="logo" style="background: url(${pageContext.request.contextPath}/resources/others/fly/images/logo-1.png) no-repeat" href="javacript:void(0);" onclick="layer.msg('欢迎来到程序员社区')" title="Fly">Fly社区</a>
         </c:if>
 		<div class="nav">
-			<a href="${pageContext.request.contextPath}/fore/article/list"> <i class="iconfont icon-wenda"></i>社区
-			</a> <a href="${pageContext.request.contextPath}/fore/article/list"> <i class="iconfont icon-ui"></i>工具
+			<a class="${param.root=='article'?'nav-this':''}" href="${pageContext.request.contextPath}/fore/article/list"> <i class="iconfont icon-wenda"></i>社区
+			</a> <a class="${param.root=='tool'?'nav-this':''}" href="${pageContext.request.contextPath}/fore/article/list"> <i class="iconfont icon-ui"></i>工具
 			</a>
 		</div>
 		<c:if test="${sessionScope.currentUser != null }">

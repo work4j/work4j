@@ -8,8 +8,9 @@
 </head>
 <body>
 <!-- 导航栏 -->
-<jsp:include page="/WEB-INF/forePage/common/nav_fore.jsp"></jsp:include>
-
+<jsp:include page="/WEB-INF/forePage/common/nav_fore.jsp" flush="true">
+    <jsp:param value="article" name="root" />
+</jsp:include>
 <div class="main layui-clear">
     <div class="fly-panel" pad20>
         <h2 class="page-title">发布帖子</h2>

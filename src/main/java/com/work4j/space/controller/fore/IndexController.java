@@ -78,9 +78,11 @@ public class IndexController {
         if (user.size() > 0) {
             SystemHelper.setCurrentUser(user.get(0));
             String referer = request.getHeader("referer");
-            String url = referer.substring(referer.indexOf("redirect") + 9, referer.length());
-            if (url != null && !url.equals("")) {
-                mav.setViewName("redirect:" +  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + url);
+            if(referer.contains("referer")){
+                String url = referer.substring(referer.indexOf("redirect") + 9, referer.length());
+                if (url != null && !url.equals("")) {
+                    mav.setViewName("redirect:" +  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + url);
+                }
             } else {
                 mav.setViewName("redirect:index");
             }

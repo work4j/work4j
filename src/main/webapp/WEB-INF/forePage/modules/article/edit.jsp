@@ -8,8 +8,9 @@
 </head>
 <body>
 <!-- 导航栏 -->
-<jsp:include page="/WEB-INF/forePage/common/nav_fore.jsp"></jsp:include>
-
+<jsp:include page="/WEB-INF/forePage/common/nav_fore.jsp" flush="true">
+    <jsp:param value="article" name="root"/>
+</jsp:include>
 <div class="main layui-clear">
     <div class="fly-panel" pad20>
         <h2 class="page-title">修改帖子</h2>
@@ -58,7 +59,10 @@
 <script>
 
     var columnId = '${result.columnId}';
-
+    var tagMap = {};
+    <c:forEach var="item" items="${result.tags}">
+    tagMap['${item.id}'] = true;
+    </c:forEach>
     $(function () {
         //获取栏目
         $.ajax({
@@ -88,7 +92,11 @@
             success: function (data) {
                 $("#tags").empty();
                 $.each(data, function (index, tag) {
-                    $("#tags").append('<input type="checkbox" value="' + tag.id + '" name="tags" title="' + tag.name + '">');
+                    if (tagMap[tag.id]) {
+                        $("#tags").append('<input type="checkbox" checked value="' + tag.id + '" name="tags" title="' + tag.name + '">');
+                    } else {
+                        $("#tags").append('<input type="checkbox" value="' + tag.id + '" name="tags" title="' + tag.name + '">');
+                    }
                 });
                 form.render('checkbox');
             }

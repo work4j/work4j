@@ -3,29 +3,43 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.work4j.space.dao.ArticleDao">
     <resultMap type="com.work4j.space.pojo.Article" id="article">
-        <id property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="title" column="title"/>
-        <result property="content" column="content"/>
-        <result property="userId" column="user_id"/>
-        <result property="releaseTime" column="release_time"/>
-        <result property="seeNum" column="see_num"/>
+        <id property="id" column="a_id"/>
+        <result property="title" column="a_title"/>
+        <result property="content" column="a_content"/>
+        <result property="userId" column="a_user_id"/>
+        <result property="releaseTime" column="a_release_time"/>
+        <result property="seeNum" column="a_see_num"/>
         <result property="replyNum" column="replyNum"/>
-        <result property="columnId" column="column_id"/>
-        <result property="enabled" column="enabled"/>
+        <result property="columnId" column="a_column_id"/>
+        <result property="enabled" column="a_enabled"/>
         <result property="nickname" column="nickname"/>
+        <result property="createDataTime" column="a_create_data_time"/>
+        <result property="createDataUsername" column="a_create_data_username"/>
+        <result property="updateDataTime" column="a_update_data_time"/>
+        <result property="updateDataUsername" column="a_update_data_username"/>
         <collection property="tags" ofType="com.work4j.space.pojo.Tag">
-            <id column="tid" property="id"/>
-            <result column="tname" property="name"/>
-            <result column="tcode" property="code"/>
+            <id property="id" column="t_id"/>
+            <result property="name" column="t_name"/>
+            <result property="code" column="t_code"/>
+            <result property="enabled" column="t_enabled"/>
+            <result property="createDataTime" column="t_create_data_time"/>
+            <result property="createDataUsername" column="t_create_data_username"/>
+            <result property="updateDataTime" column="t_update_data_time"/>
+            <result property="updateDataUsername" column="t_update_data_username"/>
         </collection>
     </resultMap>
 
     <!-- 查询 Article -->
     <select id="find" parameterType="com.work4j.space.pojo.query.ArticleQuery"
             resultMap="article">
-        SELECT t.*,u.nickname,(SELECT count(1) FROM reply_t rep WHERE rep.article_id = t.id) as replyNum,ta.id as tid,
-        ta.name as tname, ta.code as tcode
+        SELECT t.id as a_id,t.title as a_title,t.content as a_content,t.user_id as a_user_id,
+        t.release_time as a_release_time,t.see_num as a_see_num,t.column_id as a_column_id,
+        t.enabled as a_enabled,t.create_data_time as a_create_data_time,t.create_data_username as
+        a_create_data_username,t.update_data_time as a_update_data_time,t.update_data_username as
+        a_update_data_username,
+        u.nickname,(SELECT
+        count(1) FROM reply_t rep WHERE rep.article_id = t.id) as replyNum,
+        ta.id as t_id, ta.name as t_name, ta.code as t_code
         FROM article_t t
         LEFT JOIN user_t u ON u.id = t.user_id
         LEFT JOIN column_t c ON c.id = t.column_id
@@ -56,9 +70,18 @@
     </select>
 
     <!-- 通过id得到一个 Article-->
-    <select id="get" parameterType="string" resultType="com.work4j.space.pojo.Article">
-        SELECT t.*,u.nickname,(SELECT count(1) FROM reply_t rep WHERE rep.article_id = t.id) as replyNum FROM article_t t
+    <select id="get" parameterType="string" resultMap="article">
+        SELECT t.id as a_id,t.title as a_title,t.content as a_content,t.user_id as a_user_id,
+        t.release_time as a_release_time,t.see_num as a_see_num,t.column_id as a_column_id,
+        t.enabled as a_enabled,t.create_data_time as a_create_data_time,t.create_data_username as a_create_data_username,
+        t.update_data_time as a_update_data_time,t.update_data_username as a_update_data_username,
+        u.nickname,(SELECT count(1) FROM reply_t rep WHERE rep.article_id = t.id) as replyNum,
+        ta.id as t_id,ta.name as t_name, ta.code as t_code
+        FROM article_t t
         LEFT JOIN user_t u ON u.id = t.user_id
+        LEFT JOIN column_t c ON c.id = t.column_id
+        LEFT JOIN article_tag_t att ON att.article_id = t.id
+        LEFT JOIN tag_t ta ON ta.id = att.tag_id
         WHERE t.id = #{id}
     </select>
 

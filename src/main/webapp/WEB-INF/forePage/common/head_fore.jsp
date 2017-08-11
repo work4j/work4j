@@ -17,6 +17,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/others/fly/layui/css/layui.css" media="all">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/others/fly/css/global.css" media="all">
-<link id="layuicss-skinlayercss" rel="stylesheet" href="${pageContext.request.contextPath}/resources/others/fly/layui/css/modules/layer/default/layer.css" media="all">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/others/fly/layui/css/modules/layer/default/layer.css" media="all">

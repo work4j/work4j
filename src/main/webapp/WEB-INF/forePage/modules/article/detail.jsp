@@ -8,14 +8,21 @@
 </head>
 <body>
 <!-- 导航栏 -->
-<jsp:include page="/WEB-INF/forePage/common/nav_fore.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/forePage/common/nav_fore.jsp" flush="true">
+    <jsp:param value="article" name="root" />
+</jsp:include>
 <div class="main layui-clear">
     <div class="wrap">
         <div class="content detail">
             <div class="fly-panel detail-box">
                 <h1>${result.title }</h1>
                 <div class="fly-tip fly-detail-hint" data-id="6711">
-                    <span class="fly-tip-stick">标签1</span> <span>标签2</span>
+                    <c:if test="${result.tags.size() == 0}">
+                        <span style="background-color: #fff"></span>
+                    </c:if>
+                    <c:forEach var="item" items="${result.tags }">
+                        <span>${item.name} </span>
+                    </c:forEach>
                     <div class="fly-list-hint">
                         <i class="iconfont" title="回答"></i> ${result.replyNum } <i class="iconfont"
                                                                                     title="人气"></i> ${result.seeNum }
@@ -97,7 +104,7 @@
                 <div>
                     <div id="pageDiv"></div>
                 </div>
-                <div id="replyDiv" style="margin-top: 20px;display: none">
+                <div id="replyDiv" style="margin-top: 20px;margin-bottom: 20px;display: none">
                     <div style="float: left;width: 45px">
                         回复：
                     </div>

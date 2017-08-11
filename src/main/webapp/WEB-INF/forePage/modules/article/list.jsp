@@ -8,7 +8,9 @@
 </head>
 <body>
 <!-- 导航栏 -->
-<jsp:include page="/WEB-INF/forePage/common/nav_fore.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/forePage/common/nav_fore.jsp" flush="true">
+    <jsp:param value="article" name="root" />
+</jsp:include>
 <div class="main layui-clear">
     <div class="wrap">
         <div class="content">
@@ -18,8 +20,8 @@
                         <a ${column == item.code ?"class=tab-this":""} href="list?column=${item.code}">${item.name}</a>
                     </c:forEach>
 					</span>
-                <form class="fly-search">
-                    <i class="iconfont icon-sousuo"></i> <input class="layui-input" autocomplete="off"
+                <form id="searchForm" class="fly-search">
+                    <i class="iconfont icon-sousuo"></i> <input class="layui-input search" autocomplete="off"
                                                                 placeholder="搜索内容，回车跳转" type="text"
                                                                 id="search" name="search">
                 </form>
@@ -35,7 +37,7 @@
                             alt="${item.nickname}">
                     </a>
                         <h2 class="fly-tip">
-                            <a href="detail_${item.id }">${item.title }</a> <span class="fly-tip-stick">置顶</span>
+                            <a href="detail_${item.id }">${item.title }</a> <%--<span class="fly-tip-stick">置顶</span>--%>
                         </h2>
                         <p>
                             <span><a href="javascript:void(0)">${item.nickname }</a></span> <span><fmt:formatDate
@@ -97,9 +99,30 @@
 <jsp:include page="/WEB-INF/forePage/common/import_js_fore.jsp"></jsp:include>
 <!-- 当前页面js -->
 <script>
+
+    $('.icon-sousuo').unbind();
+    $('.icon-sousuo').bind('click', function () {
+        $("#searchForm").submit();
+    });
+    $('.search').keydown(function(e){
+        if(e.keyCode==13){
+            $("#searchForm").submit();
+        }
+    });
+
     $("#search").val(GetQueryString("search"));
+    var url = "list?";
+    if (GetQueryString('column') != null) {
+        url = url + "&column=" + GetQueryString('column');
+        $("#searchForm").append('<input type="text" hidden="hidden" name="column" value="' + GetQueryString('column') + '"/>');
+    }
+    if (GetQueryString('tag') != null) {
+        url = url + "&tag=" + GetQueryString('tag');
+        $("#searchForm").append('<input type="text" hidden="hidden" name="tag" value="' + GetQueryString('tag') + '"/>');
+    }
+    url = url.replace("?&", "?");
     var option = {
-        listUrl: "list?",
+        listUrl: url,
         totalPages: ${result.getPages()},
         page: ${result.getPageNum()},
         param: {
