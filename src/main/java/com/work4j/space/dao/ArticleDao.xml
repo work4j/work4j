@@ -58,6 +58,9 @@
             <if test="tag != null and tag != ''">
                 AND ta.code = #{tag}
             </if>
+            <if test="enabled != null">
+                AND t.enabled = #{enabled}
+            </if>
         </where>
         ORDER BY t.create_data_time DESC
     </select>

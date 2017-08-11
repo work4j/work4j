@@ -44,6 +44,7 @@ public class ArticleController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView listPage(final ArticleQuery query) {
         ModelAndView mav = new ModelAndView(LIST_PAGE);
+        query.setEnabled(1);
         mav.addObject("result", articleService.findByPage(query));
         ColumnQuery columnQuery = new ColumnQuery();
         columnQuery.setEnabled(1);
@@ -94,7 +95,7 @@ public class ArticleController {
             mav.setViewName("redirect:/fore/login?redirect=" + request.getRequestURI());
             return mav;
         }
-        if (result != null) {
+        if (result != null && result.getEnabled() == 1) {
             if (!SystemHelper.getCurrentUser().getId().equals(result.getUserId())) {
                 mav.setViewName("redirect:/fore/noPermission");
             } else {
@@ -122,7 +123,7 @@ public class ArticleController {
     public ModelAndView detail(@PathVariable("id") final String id, ReplyQuery query) {
         ModelAndView mav = new ModelAndView(DETAIL_PAGE);
         Article result = articleService.get(id);
-        if (result != null) {
+        if (result != null && result.getEnabled() == 1) {
             mav.addObject("result", result);
             query.setArticleId(id);
             mav.addObject("replys", replyService.findByPage(query));
