@@ -5,7 +5,8 @@
     
     <!-- 查询 Collection -->
     <select id="find" parameterType="com.work4j.space.pojo.query.CollectionQuery" resultType="com.work4j.space.pojo.Collection">
-        SELECT * FROM collection_t ORDER BY create_data_time DESC
+        SELECT t.*,art.title FROM collection_t t
+        LEFT JOIN article_t art ON art.id = t.id
     </select>
     
     <!-- 通过id得到一个 Collection-->

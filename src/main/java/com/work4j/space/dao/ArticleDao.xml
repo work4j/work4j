@@ -61,6 +61,9 @@
             <if test="enabled != null">
                 AND t.enabled = #{enabled}
             </if>
+            <if test="userId != null and userId != ''">
+                AND t.user_id = #{userId}
+            </if>
         </where>
         ORDER BY t.create_data_time DESC
     </select>

@@ -13,4 +13,6 @@ public class Collection implements Serializable {
     private String id; // id
     private String userId; // userId
     private String articleId; // articleId
+
+    private String title; // title
 }
