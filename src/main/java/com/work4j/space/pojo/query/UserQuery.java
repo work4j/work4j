@@ -21,6 +21,10 @@ public class UserQuery implements Serializable {
     private String realName; // realName
     private java.util.Date registerTime; // registerTime
     private Integer userType; // userType
+    private Integer sex; //sex
+    private String city; //city
+    private String sign; //sign
+    private String head; //head
     private Integer enabled; // enabled
     private java.util.Date createDataTime; // createDataTime
     private String createDataUsername; // createDataUsername

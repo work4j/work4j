@@ -1,5 +1,6 @@
 package com.work4j.space.service.impl;
 
+import com.work4j.space.common.SystemHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -62,7 +63,14 @@ public class CollectionServiceImpl implements CollectionService {
     public int delete(final String id) {
         return collectionDao.delete(id);
     }
-	
+
+    /**
+     * 删除一个 Collection
+     */
+    public int delete(final CollectionQuery query) {
+        return collectionDao.deleteByQuery(query);
+    }
+
 	/**
      * 修改是否可用
      */

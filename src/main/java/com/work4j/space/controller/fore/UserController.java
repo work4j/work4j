@@ -1,6 +1,8 @@
 package com.work4j.space.controller.fore;
 
+import com.github.pagehelper.Page;
 import com.work4j.space.common.SystemHelper;
+import com.work4j.space.pojo.Article;
 import com.work4j.space.pojo.Collection;
 import com.work4j.space.pojo.User;
 import com.work4j.space.pojo.form.UserForm;
@@ -24,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * UserController 
+ * UserController
  */
 @Controller
 @RequestMapping("/user")
@@ -43,38 +45,45 @@ public class UserController {
     private ReplyService replyService;
 
     /**
-     *  index页面
+     * index页面
      */
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public ModelAndView listPage(final ArticleQuery query){
+    public ModelAndView listPage(final ArticleQuery query) {
         ModelAndView mav = new ModelAndView(INDEX_PAGE);
         //查询我的文章
         query.setUserId(SystemHelper.getCurrentUser().getId());
         query.setEnabled(1);
-		mav.addObject("result", articleService.findByPage(query));
-		return mav;
+        mav.addObject("result", articleService.findByPage(query));
+        CollectionQuery collectionQuery = new CollectionQuery();
+        collectionQuery.setUserId(SystemHelper.getCurrentUser().getId());
+        mav.addObject("count", collectionService.findByPage(collectionQuery).getTotal());
+        return mav;
     }
 
     /**
-     *  collection页面
+     * collection页面
      */
     @RequestMapping(value = "/collection", method = RequestMethod.GET)
-    public ModelAndView listPage(final CollectionQuery query){
+    public ModelAndView listPage(final CollectionQuery query) {
         ModelAndView mav = new ModelAndView(COLLECTION_PAGE);
         //查询我的收藏
         query.setUserId(SystemHelper.getCurrentUser().getId());
-		mav.addObject("result", collectionService.findByPage(query));
-		return mav;
+        mav.addObject("result", collectionService.findByPage(query));
+        ArticleQuery articleQuery = new ArticleQuery();
+        articleQuery.setUserId(SystemHelper.getCurrentUser().getId());
+        articleQuery.setEnabled(1);
+        mav.addObject("count", articleService.findByPage(articleQuery).getTotal());
+        return mav;
     }
 
     /**
      * set页面
      */
     @RequestMapping(value = "/set", method = RequestMethod.GET)
-   public ModelAndView setPage(final UserQuery query){
+    public ModelAndView setPage() {
         ModelAndView mav = new ModelAndView(SET_PAGE);
-		mav.addObject("result", userService.find(query));
-		return mav;
+        mav.addObject("result", SystemHelper.getCurrentUser());
+        return mav;
     }
 
     /**
@@ -100,58 +109,24 @@ public class UserController {
         }
         return mav;
     }
-    
-    /**
-     * 新增 User
-     */
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(final UserForm form) {
-		userService.add(form);
-		return "redirect:list";
-	}
-	
+
     /**
      * 修改 User
      */
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String edit(final UserForm form) {
-		userService.update(form);
-		return "redirect:list";
-	}
-	
-	/**
-     * 根据id删除 User
-     */
-    @RequestMapping(value = "/delete_{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> delete(@PathVariable("id") final String id) {
-		Map<String, Object> map = new HashMap<String, Object>();
-        userService.delete(id);
-        map.put("success", true);
-        return map;
-	}	
-	
-	/**
-     * 启用 User
-     */
-    @RequestMapping(value = "/enabled_{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public final Map<String, Object> enabled(@PathVariable("id") final String id){
+    public Map<String, Object> edit(final UserForm form) {
         Map<String, Object> map = new HashMap<String, Object>();
-        userService.changeEnabled(id, 1);
-        map.put("success", true);
-        return map;
-    }
-	
-	/**
-     * 停用 User
-     */
-    @RequestMapping(value = "/disabled_{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public final Map<String, Object> disabled(@PathVariable("id") final String id){
-		Map<String, Object> map = new HashMap<String, Object>();
-        userService.changeEnabled(id, 2);
-        map.put("success", true);
+        if (SystemHelper.getCurrentUser() == null) {
+            map.put("success", false);
+            map.put("msg", "请先登录");
+        } else {
+            String id = SystemHelper.getCurrentUser().getId();
+            form.setId(id);
+            userService.update(form);
+            SystemHelper.setCurrentUser(userService.get(id));
+            map.put("success", true);
+        }
         return map;
     }
 }

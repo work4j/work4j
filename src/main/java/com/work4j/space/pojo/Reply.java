@@ -24,4 +24,5 @@ public class Reply implements Serializable {
 
     private String nickname; //nickname
     private Reply toReply; //toReply
+    private String title; //title
 }

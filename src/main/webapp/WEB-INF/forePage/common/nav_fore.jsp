@@ -20,10 +20,10 @@
 		</div>
 		<c:if test="${sessionScope.currentUser != null }">
 			<div class="nav-user">
-				<a class="avatar" href="javacript:void(0);" onclick="layer.msg('功能开发中')"> <img src="http://q.qlogo.cn/qqapp/101235792/3F2CF40CCA8313F4CC8C4A7044B2ADB4/100"> <cite>${sessionScope.currentUser.nickname }</cite>
+				<a class="avatar" href="${pageContext.request.contextPath}/fore/user/index"> <img src="http://q.qlogo.cn/qqapp/101235792/3F2CF40CCA8313F4CC8C4A7044B2ADB4/100"> <cite>${sessionScope.currentUser.nickname }</cite>
 				</a>
 				<div class="nav">
-					<a href="${pageContext.request.contextPath}/fore/user/index"><i class="iconfont icon-shezhi"></i>设置</a> <a href="${pageContext.request.contextPath}/fore/logout"><i class="iconfont icon-tuichu" style="top: 0; font-size: 22px;"></i>退了</a>
+					<a href="${pageContext.request.contextPath}/fore/user/set"><i class="iconfont icon-shezhi"></i>设置</a> <a href="${pageContext.request.contextPath}/fore/logout"><i class="iconfont icon-tuichu" style="top: 0; font-size: 22px;"></i>退了</a>
 				</div>
 			</div>
 		</c:if>

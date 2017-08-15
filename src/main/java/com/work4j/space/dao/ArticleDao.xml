@@ -31,6 +31,40 @@
 
     <!-- 查询 Article -->
     <select id="find" parameterType="com.work4j.space.pojo.query.ArticleQuery"
+            resultType="com.work4j.space.pojo.Article">
+        SELECT t.*,u.nickname,(SELECT count(1) FROM reply_t rep WHERE rep.article_id = t.id) as replyNum
+        FROM article_t t
+        LEFT JOIN user_t u ON u.id = t.user_id
+        LEFT JOIN column_t c ON c.id = t.column_id
+        <if test="tag != null and tag != ''">
+            LEFT JOIN article_tag_t att ON att.article_id = t.id
+            LEFT JOIN tag_t ta ON ta.id = att.tag_id
+        </if>
+        <where>
+            <if test="search != null and search != ''">
+                AND t.title LIKE CONCAT('%',#{search},'%')
+            </if>
+            <if test="columnId != null and columnId != ''">
+                AND t.column_id = #{columnId}
+            </if>
+            <if test="column != null and column != ''">
+                AND c.code = #{column}
+            </if>
+            <if test="tag != null and tag != ''">
+                AND ta.code = #{tag}
+            </if>
+            <if test="enabled != null">
+                AND t.enabled = #{enabled}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND t.user_id = #{userId}
+            </if>
+        </where>
+        ORDER BY t.create_data_time DESC
+    </select>
+
+<!--    &lt;!&ndash; 查询 Article &ndash;&gt;
+    <select id="find" parameterType="com.work4j.space.pojo.query.ArticleQuery"
             resultMap="article">
         SELECT t.id as a_id,t.title as a_title,t.content as a_content,t.user_id as a_user_id,
         t.release_time as a_release_time,t.see_num as a_see_num,t.column_id as a_column_id,
@@ -66,7 +100,7 @@
             </if>
         </where>
         ORDER BY t.create_data_time DESC
-    </select>
+    </select>-->
 
     <!-- 查询 Tag -->
     <select id="selectTag" parameterType="string"

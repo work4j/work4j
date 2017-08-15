@@ -3,6 +3,8 @@ package com.work4j.space.pojo.form;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -16,4 +18,5 @@ public class CollectionForm implements Serializable {
 	private String id = UUID.randomUUID().toString().replaceAll("-", "");
 	private String userId; // userId
 	private String articleId; // articleId
+	private Date collectionTime = new Date(); //collectionTime
 }

@@ -32,7 +32,7 @@
                     <li class="fly-none">没有任何文章</li>
                 </c:if>
                 <c:forEach var="item" items="${result }" varStatus="items">
-                    <li class="fly-list-li"><a href="javascript:void(0)" class="fly-list-avatar"> <img
+                    <li class="fly-list-li"><a href="${pageContext.request.contextPath}/fore/user/detail_${item.userId }" class="fly-list-avatar"> <img
                             src="http://q.qlogo.cn/qqapp/101235792/3F2CF40CCA8313F4CC8C4A7044B2ADB4/100"
                             alt="${item.nickname}">
                     </a>
@@ -40,7 +40,7 @@
                             <a href="detail_${item.id }">${item.title }</a> <%--<span class="fly-tip-stick">置顶</span>--%>
                         </h2>
                         <p>
-                            <span><a href="javascript:void(0)">${item.nickname }</a></span> <span><fmt:formatDate
+                            <span><a href="${pageContext.request.contextPath}/fore/user/detail_${item.userId }">${item.nickname }</a></span> <span><fmt:formatDate
                                 value="${item.releaseTime }" pattern="yyyy-MM-dd"/> </span>
                             <c:forEach var="tag" items="${item.tags}"><span>${tag.name}</span></c:forEach>
                             <span
@@ -61,7 +61,7 @@
             <h3 class="fly-panel-title">发帖排行榜 - TOP 12</h3>
             <div class="user-looklog leifeng-rank">
 				<span> <c:forEach var="item" items="${top12 }" varStatus="items">
-						<a href="javacript:void(0);" onclick="layer.msg('功能开发中')"> <img
+						<a href="${pageContext.request.contextPath}/fore/user/detail_${item.userId }"> <img
                                 src="http://q.qlogo.cn/qqapp/101235792/3F2CF40CCA8313F4CC8C4A7044B2ADB4/100"> <cite>${item.nickname }</cite> <i>${item.articleNum }次发帖</i>
 						</a>
                 </c:forEach>

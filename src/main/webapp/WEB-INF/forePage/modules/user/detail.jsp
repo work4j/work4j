@@ -15,7 +15,7 @@
     <img src="http://tp4.sinaimg.cn/1345566427/180/5730976522/0" alt="${result.nickname }">
     <h1>
         ${result.nickname }
-        <i class="iconfont icon-nan"></i>
+        <i class="iconfont ${result.sex==1?'icon-nan':'icon-nv'}"></i>
         <!-- <i class="iconfont icon-nv"></i> -->
 
         <!-- <span style="color:#c00;">（超级码农）</span>
@@ -23,11 +23,11 @@
         <span>（该号已被封）</span> -->
     </h1>
     <p class="fly-home-info">
-        <i class="iconfont icon-zuichun" title="飞吻"></i><span style="color: #FF7200;">67206飞吻</span>
-        <i class="iconfont icon-shijian"></i><span>2015-06-17 加入</span>
-        <i class="iconfont icon-chengshi"></i><span>来自杭州</span>
+        <i class="iconfont icon-zuichun" title="飞吻"></i><span style="color: #FF7200;">${result.email }</span>
+        <i class="iconfont icon-shijian"></i><span><fmt:formatDate value="${result.registerTime}" pattern="yyyy-MM-dd"/> 加入</span>
+        <i class="iconfont icon-chengshi"></i><span>来自${result.city}</span>
     </p>
-    <p class="fly-home-sign">（人生仿若一场修行）</p>
+    <p class="fly-home-sign">（${result.sign == null ?'什么也没有留下':result.sign}）</p>
 </div>
 
 <div class="main fly-home-main">
@@ -65,16 +65,11 @@
                     <c:forEach var="item" items="${replys }" varStatus="items">
                         <li>
                             <p>
-                                <span>1分钟前</span>
-                                在<a href="" target="_blank">tips能同时渲染多个吗?</a>中回答：
+                                <span><fmt:formatDate value="${item.replyTime }" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+                                在<a href="${pageContext.request.contextPath}/fore/article/detail_${item.articleId }"
+                                    target="_blank">${item.title }</a>中评论：
                             </p>
-                            <div class="home-dacontent">
-                                尝试给layer.photos加上这个属性试试：
-                                <pre>
-full: true
-</pre>
-                                文档没有提及
-                            </div>
+                            <div class="home-dacontent">${item.content }</div>
                         </li>
                     </c:forEach>
                 </ul>
@@ -98,6 +93,26 @@ full: true
         param: {}
     };
     tg_basePage(option);
+    layui.cache.page = 'jie';
+    layui.cache.user = {
+        username: '游客'
+        , uid: -1
+        , avatar: '${pageContext.request.contextPath}/resources/others/fly/images/avatar/00.jpg'
+        , experience: 83
+        , sex: '男'
+    };
+    layui.config({
+        version: "2.0.0"
+        , base: '${pageContext.request.contextPath}/resources/others/fly/mods/'
+    }).extend({
+        fly: 'index'
+    }).use('fly', function () {
+        var fly = layui.fly;
+        $('.home-dacontent').each(function () {
+            var othis = $(this), html = othis.html();
+            othis.html(fly.content(html));
+        });
+    });
 </script>
 <ul class="fly-rbar">
     <li id="F_topbar" class="iconfont icon-top" method="top"></li>

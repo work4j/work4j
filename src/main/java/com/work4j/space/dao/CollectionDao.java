@@ -35,7 +35,12 @@ public interface CollectionDao {
      * 删除一个 Collection
      */
     int delete(final String id);
-    
+
+    /**
+     * 删除一个 Collection
+     */
+    int deleteByQuery(final CollectionQuery query);
+
     /**
      * 修改是否可用
      */

@@ -1,14 +1,13 @@
 package com.work4j.space.controller.fore;
 
+import com.github.pagehelper.Page;
 import com.work4j.space.common.SystemHelper;
 import com.work4j.space.pojo.Article;
+import com.work4j.space.pojo.Collection;
+import com.work4j.space.pojo.Tag;
 import com.work4j.space.pojo.form.ArticleForm;
-import com.work4j.space.pojo.query.ArticleQuery;
-import com.work4j.space.pojo.query.ColumnQuery;
-import com.work4j.space.pojo.query.ReplyQuery;
-import com.work4j.space.service.ArticleService;
-import com.work4j.space.service.ColumnService;
-import com.work4j.space.service.ReplyService;
+import com.work4j.space.pojo.query.*;
+import com.work4j.space.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +38,10 @@ public class ArticleController {
     private ReplyService replyService;
     @Autowired
     private ColumnService columnService;
+    @Autowired
+    private TagService tagService;
+    @Autowired
+    private CollectionService collectionService;
 
     /**
      * Article页面
@@ -45,7 +50,14 @@ public class ArticleController {
     public ModelAndView listPage(final ArticleQuery query) {
         ModelAndView mav = new ModelAndView(LIST_PAGE);
         query.setEnabled(1);
-        mav.addObject("result", articleService.findByPage(query));
+        Page<Article> articles = articleService.findByPage(query);
+        for (Article article : articles) {
+            TagQuery tagQuery = new TagQuery();
+            tagQuery.setArticleId(article.getId());
+            tagQuery.setEnabled(1);
+            article.setTags(tagService.find(tagQuery));
+        }
+        mav.addObject("result", articles);
         ColumnQuery columnQuery = new ColumnQuery();
         columnQuery.setEnabled(1);
         mav.addObject("columns", columnService.find(columnQuery));
@@ -126,8 +138,18 @@ public class ArticleController {
         if (result != null && result.getEnabled() == 1) {
             mav.addObject("result", result);
             query.setArticleId(id);
+            query.setEnabled(1);
             mav.addObject("replys", replyService.findByPage(query));
             articleService.updateSeeNum(id);
+            mav.addObject("collection", false);
+            if (SystemHelper.getCurrentUser() != null) {
+                CollectionQuery collectionQuery = new CollectionQuery();
+                collectionQuery.setArticleId(id);
+                collectionQuery.setUserId(SystemHelper.getCurrentUser().getId());
+                if (collectionService.find(collectionQuery).size() > 0) {
+                    mav.addObject("collection", true);
+                }
+            }
         } else {
             mav.setViewName("redirect:/fore/404");
         }

@@ -12,14 +12,16 @@
         <result column="reply_time" property="replyTime"/>
         <result column="enabled" property="enabled"/>
         <result column="nickname" property="nickname"/>
+        <result column="title" property="title"/>
         <association property="toReply" column="to_reply_id" select="get">
         </association>
     </resultMap>
 
     <!-- 查询 Reply -->
     <select id="find" parameterType="com.work4j.space.pojo.query.ReplyQuery" resultMap="reply">
-        SELECT t.*,u.nickname FROM reply_t t
+        SELECT t.*,u.nickname,art.title FROM reply_t t
         LEFT JOIN user_t u ON u.id = t.user_id
+        LEFT JOIN article_t art ON art.id = t.article_id
         <where>
             <if test="search != null and search != ''">
                 AND t.content LIKE CONCAT('%',#{search},'%')

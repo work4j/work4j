@@ -31,12 +31,6 @@
                 基本设置
             </a>
         </li>
-        <li class="layui-nav-item">
-            <a href="message">
-                <i class="layui-icon">&#xe611;</i>
-                我的消息
-            </a>
-        </li>
     </ul>
 
     <div class="site-tree-mobile layui-hide">
@@ -52,9 +46,9 @@
         -->
         <div class="layui-tab layui-tab-brief" lay-filter="user">
             <ul class="layui-tab-title" id="LAY_mine">
-                <li class="layui-this">我发的帖（<span>${result.size() }</span>）</li>
+                <li class="layui-this">我发的帖（<span>${result.getTotal() }</span>）</li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/fore/user/collection">我收藏的帖（<span>${result.size() }</span>）</a>
+                    <a href="${pageContext.request.contextPath}/fore/user/collection">我收藏的帖（<span>${count}</span>）</a>
                 </li>
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">

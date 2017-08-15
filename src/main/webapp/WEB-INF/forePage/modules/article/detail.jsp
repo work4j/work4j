@@ -9,7 +9,7 @@
 <body>
 <!-- 导航栏 -->
 <jsp:include page="/WEB-INF/forePage/common/nav_fore.jsp" flush="true">
-    <jsp:param value="article" name="root" />
+    <jsp:param value="article" name="root"/>
 </jsp:include>
 <div class="main layui-clear">
     <div class="wrap">
@@ -37,8 +37,14 @@
                     </a>
                     <div class="detail-hits" id="LAY_jieAdmin" data-id="6711">
                         <span style="color: #FF7200">悬赏：5飞吻</span>
-                        <span class="layui-btn layui-btn-mini jie-admin " type="collect" data-type="add"
-                              onclick="layer.msg('功能开发中')">收藏</span>
+                        <c:if test="${!collection}">
+                            <span class="layui-btn layui-btn-mini jie-admin " id="${result.id }"
+                                  onclick="collection(this)">收藏</span>
+                        </c:if>
+                        <c:if test="${collection}">
+                            <span class="layui-btn layui-btn-mini jie-admin layui-btn-danger" id="${result.id }"
+                                  onclick="collection(this)">取消收藏</span>
+                        </c:if>
                         <c:if test="${result.userId == sessionScope.currentUser.id}">
                             <a href="edit_${result.id}" class="layui-btn layui-btn-mini jie-admin" type="button">修改</a>
                         </c:if>
@@ -193,6 +199,28 @@
 <jsp:include page="/WEB-INF/forePage/common/import_js_fore.jsp"></jsp:include>
 <!-- 当前页面js -->
 <script type="text/javascript">
+    function collection(e) {
+        if ($(e).hasClass('layui-btn-danger')) {
+            $.post('${pageContext.request.contextPath}/fore/collection/delete', {'articleId': $(e).attr('id')}, function (data) {
+                if (data.success) {
+                    $(e).removeClass('layui-btn-danger');
+                    $(e).text('收藏');
+                } else {
+                    layer.msg(data.msg);
+                }
+            }, 'json');
+        } else {
+            $.post('${pageContext.request.contextPath}/fore/collection/add', {'articleId': $(e).attr('id')}, function (data) {
+                if (data.success) {
+                    $(e).addClass('layui-btn-danger');
+                    $(e).text('取消收藏');
+                } else {
+                    layer.msg(data.msg);
+                }
+            }, 'json');
+        }
+    }
+
     function reply(e) {
         var a = $(e).parents("li").clone();
         a.find(".jieda-reply-my").remove();

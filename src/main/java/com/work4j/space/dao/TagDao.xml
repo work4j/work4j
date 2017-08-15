@@ -6,9 +6,18 @@
     <!-- 查询 Tag -->
     <select id="find" parameterType="com.work4j.space.pojo.query.TagQuery" resultType="com.work4j.space.pojo.Tag">
         SELECT * FROM tag_t t
+        <if test="articleId != null and articleId !=''">
+            LEFT JOIN article_tag_t art ON art.tag_id = t.id
+        </if>
         <where>
             <if test="search != null and search != ''">
                 AND t.name LIKE CONCAT('%',#{search},'%')
+            </if>
+            <if test="enabled != null">
+                AND t.enabled = #{enabled}
+            </if>
+            <if test="articleId != null and articleId !=''">
+                AND art.article_id = #{articleId}
             </if>
         </where>
         ORDER BY t.create_data_time DESC

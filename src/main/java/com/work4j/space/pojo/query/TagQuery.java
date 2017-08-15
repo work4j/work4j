@@ -25,4 +25,6 @@ public class TagQuery implements Serializable {
     private Integer page = 1;
     private Integer limit = 20;
     private String search;
+
+    private String articleId;
 }

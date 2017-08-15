@@ -14,27 +14,21 @@
 <div class="main fly-user-main layui-clear">
     <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
         <li class="layui-nav-item">
-            <a href="home.html">
+            <a href="detail_${sessionScope.currentUser.id }">
                 <i class="layui-icon">&#xe609;</i>
                 我的主页
             </a>
         </li>
         <li class="layui-nav-item layui-this">
-            <a href="index.html">
+            <a href="index">
                 <i class="layui-icon">&#xe612;</i>
                 用户中心
             </a>
         </li>
         <li class="layui-nav-item">
-            <a href="set.html">
+            <a href="set">
                 <i class="layui-icon">&#xe620;</i>
                 基本设置
-            </a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="message.html">
-                <i class="layui-icon">&#xe611;</i>
-                我的消息
             </a>
         </li>
     </ul>
@@ -52,8 +46,8 @@
         -->
         <div class="layui-tab layui-tab-brief" lay-filter="user">
             <ul class="layui-tab-title" id="LAY_mine">
-                <li><a href="${pageContext.request.contextPath}/fore/user/index">我发的帖（<span>89</span>）</a></li>
-                <li class="layui-this">我收藏的帖（<span>16</span>）</li>
+                <li><a href="${pageContext.request.contextPath}/fore/user/index">我发的帖（<span>${count}</span>）</a></li>
+                <li class="layui-this">我收藏的帖（<span>${result.getTotal()}</span>）</li>
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
@@ -67,10 +61,10 @@
                                 <a class="jie-title"
                                    href="${pageContext.request.contextPath}/fore/article/detail_${item.id }"
                                    target="_blank">${item.title }</a>
-                                <i><fmt:formatDate value="${item.releaseTime }" pattern="yyyy-MM-dd HH:mm:ss"/> </i>
-                                <a class="mine-edit"
+                                <i>收藏于 <fmt:formatDate value="${item.collectionTime }" pattern="yyyy-MM-dd HH:mm:ss"/></i>
+                               <%-- <a class="mine-edit"
                                    href="${pageContext.request.contextPath}/fore/article/edit_${item.id }">编辑</a>
-                                <em>${item.seeNum }阅/${item.replyNum }答</em>
+                                   <em>${item.seeNum }阅/${item.replyNum }答</em>--%>
                             </li>
                         </c:forEach>
                     </ul>
