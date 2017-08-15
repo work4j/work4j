@@ -122,10 +122,10 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function (exports) {
                             var image = layero.find('input[name="image"]');
 
                             layui.upload({
-                                url: '/api/upload/'
+                                url: '/fore/upload/uploadImage'
                                 , elem: '#fly-jie-upload .layui-upload-file'
                                 , success: function (res) {
-                                    if (res.status == 0) {
+                                    if (res.code == 0) {
                                         image.val(res.url);
                                     } else {
                                         layer.msg(res.msg, {icon: 5});

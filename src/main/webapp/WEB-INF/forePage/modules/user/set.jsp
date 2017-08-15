@@ -75,7 +75,8 @@
                         <div class="layui-form-item">
                             <label for="L_city" class="layui-form-label">城市</label>
                             <div class="layui-input-inline">
-                                <input maxlength="45" value="${result.city}" type="text" id="L_city" name="city" autocomplete="off"
+                                <input maxlength="45" value="${result.city}" type="text" id="L_city" name="city"
+                                       autocomplete="off"
                                        class="layui-input">
                             </div>
                         </div>
@@ -87,7 +88,7 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit>确认修改</button>
+                            <button class="layui-btn" key="set-mine" lay-filter="info" lay-submit>确认修改</button>
                         </div>
                     </form>
                 </div>
@@ -97,16 +98,16 @@
                         <div class="avatar-add">
                             <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过30KB</p>
                             <div class="upload-img">
-                                <input type="file" name="file" id="LAY-file" lay-title="上传头像">
+                                <input class="layui-upload-file" type="file" name="file" id="LAY-file" lay-title="上传头像">
                             </div>
-                            <img src="http://tp4.sinaimg.cn/1345566427/180/5730976522/0">
+                            <img id="headImg" src="${result.head }">
                             <span class="loading"></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="layui-form layui-form-pane layui-tab-item">
-                    <form action="/user/repass" method="post">
+                    <form action="repass" method="post">
                         <div class="layui-form-item">
                             <label for="L_nowpass" class="layui-form-label">当前密码</label>
                             <div class="layui-input-inline">
@@ -115,9 +116,9 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label for="L_pass" class="layui-form-label">新密码</label>
+                            <label for="L_pass" class="layui-form-label">密码</label>
                             <div class="layui-input-inline">
-                                <input type="password" id="L_pass" name="pass" required lay-verify="required"
+                                <input type="password" id="L_pass" name="password" required lay-verify="password"
                                        autocomplete="off" class="layui-input">
                             </div>
                             <div class="layui-form-mid layui-word-aux">6到16个字符</div>
@@ -125,12 +126,12 @@
                         <div class="layui-form-item">
                             <label for="L_repass" class="layui-form-label">确认密码</label>
                             <div class="layui-input-inline">
-                                <input type="password" id="L_repass" name="repass" required lay-verify="required"
-                                       autocomplete="off" class="layui-input">
+                                <input type="password" id="L_repass" required lay-verify="repass" autocomplete="off"
+                                       class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit>确认修改</button>
+                            <button class="layui-btn" key="set-mine" lay-filter="repass" lay-submit>确认修改</button>
                         </div>
                     </form>
                 </div>
@@ -145,7 +146,81 @@
 <jsp:include page="/WEB-INF/forePage/common/import_js_fore.jsp"></jsp:include>
 <!-- 当前页面js -->
 <script>
+    form.on('submit(info)', function (data) {
+        $.post(data.form.action, data.field, function (d) {
+            if (d.success) {
+                tg_alertSuccess('修改成功');
+                setTimeout(function () {
+                    location.reload();
+                }, 1000);
+            } else {
+                tg_alertError('修改失败');
+                data.form.reset();
+            }
+        }, 'json');
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    });
 
+    form.on('submit(info)', function (data) {
+        $.post(data.form.action, data.field, function (d) {
+            if (d.success) {
+                tg_alertSuccess('修改成功');
+                setTimeout(function () {
+                    location.reload();
+                }, 1000);
+            } else {
+                tg_alertError('修改失败');
+                data.form.reset();
+            }
+        }, 'json');
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    });
+
+    var t = /^[0-9a-zA-Z]*$/;
+    //自定义验证规则
+    var rules = {
+        password: function (value) {
+            if (value.length < 6 || value.length > 16) {
+                return '密码在6~16个字符之间';
+            } else if (!t.test(value)) {
+                return '密码只能为数字、字母或两者组合';
+            }
+        },
+        repass: function (value) {
+            if (value.length <= 0) {
+                return '不能为空';
+            } else if (value != $("#L_pass").val()) {
+                return '两次密码输入不一致';
+            }
+        }
+    };
+    form.verify(rules);
+    //监听提交
+    form.on('submit(repass)', function (data) {
+        $.post(data.form.action, data.field, function (d) {
+            if (d.success) {
+                tg_alertSuccess('修改成功');
+                data.form.reset();
+            } else {
+                layer.msg(d.msg);
+            }
+        }, 'json');
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    });
+
+    layui.use('upload', function () {
+        layui.upload({
+            url: '${pageContext.request.contextPath}/fore/upload/uploadImage'
+            , success: function (res) {
+                if(res.code == 0){
+                    $("#headImg").attr("src", res.url);
+                }else{
+                    layer.msg(res.msg, {icon: 5});
+                }
+
+            }
+        });
+    });
 </script>
 <ul class="fly-rbar">
     <li id="F_topbar" class="iconfont icon-top" method="top"></li>

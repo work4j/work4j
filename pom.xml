@@ -198,5 +198,12 @@
             <artifactId>cglib</artifactId>
             <version>3.2.5</version>
         </dependency>
+
+        <!--Jodd是一个普通开源Java包。你可以把Jodd想象成Java的"瑞士军刀",不仅小，锋利而且包含许多便利的功能。-->
+        <dependency>
+            <groupId>org.jodd</groupId>
+            <artifactId>jodd-props</artifactId>
+            <version>3.7</version>
+        </dependency>
     </dependencies>
 </project>

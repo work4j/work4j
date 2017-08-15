@@ -111,6 +111,26 @@ public class UserController {
     }
 
     /**
+     * 修改 password
+     */
+    @RequestMapping(value = "/repass", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> repass(final UserForm form, final String nowpass) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (!SystemHelper.getCurrentUser().getPassword().equals(nowpass)) {
+            map.put("success", false);
+            map.put("msg", "当前密码错误");
+        } else {
+            String id = SystemHelper.getCurrentUser().getId();
+            form.setId(id);
+            userService.update(form);
+            SystemHelper.setCurrentUser(userService.get(id));
+            map.put("success", true);
+        }
+        return map;
+    }
+
+    /**
      * 修改 User
      */
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
