@@ -92,12 +92,12 @@
                                                           pattern="yyyy-MM-dd HH:mm:ss"/></span>
                                                 </div>
                                             </div>
-                                            <div class="detail-body jieda-body">${item.toReply.content }</div>
+                                            <div class="detail-body jieda-body photos">${item.toReply.content }</div>
                                         </blockquote>
                                     </div>
                                 </div>
                             </c:if>
-                            <div class="detail-body jieda-body">${item.content }</div>
+                            <div class="detail-body jieda-body photos">${item.content }</div>
                             <div class="jieda-reply-my">
 								<span class="jieda-zan " type="zan"> <i class="iconfont icon-zan"></i> <em>0</em>
 								</span> <span onclick="reply(this)"> <i class="iconfont icon-svgmoban53"></i> 回复
@@ -275,8 +275,13 @@
             var othis = $(this), html = othis.html();
             othis.html(fly.content(html));
         });
+        //相册
+        layer.photos({
+            photos: '.photos'
+            , zIndex: 9999999999
+            , anim: -1
+        });
     });
-
 </script>
 <ul class="fly-rbar">
     <li id="F_topbar" class="iconfont icon-top" method="top"></li>
