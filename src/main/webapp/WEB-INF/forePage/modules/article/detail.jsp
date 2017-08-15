@@ -54,7 +54,7 @@
             </div>
             <div class="fly-panel detail-box" style="padding-top: 0;">
                 <a name="comment"></a>
-                <ul class="jieda photos" id="jieda">
+                <ul class="jieda" id="jieda">
                     <c:if test="${replys.size() == 0 }">
                         <li id="none" class="fly-none">没有任何评论</li>
                     </c:if>
@@ -64,7 +64,7 @@
                                 <a class="jie-user" href="javascript:void(0)"> <img
                                         src="http://q.qlogo.cn/qqapp/101235792/3F2CF40CCA8313F4CC8C4A7044B2ADB4/100"
                                         alt="${item.nickname }"
-                                        layer-index="1"> <cite> <i>${item.nickname }</i>
+                                > <cite> <i>${item.nickname }</i>
                                     <!--  <em style="padding: 0; color: #FF7200;">VIP2</em> -->
                                 </cite>
                                 </a>
@@ -83,8 +83,7 @@
                                             <div class="detail-about detail-about-reply">
                                                 <a class="jie-user" href="javascript:void(0)"> <img
                                                         src="http://q.qlogo.cn/qqapp/101235792/3F2CF40CCA8313F4CC8C4A7044B2ADB4/100"
-                                                        alt="${item.toReply.nickname }"
-                                                        layer-index="1"> <cite> <i>${item.toReply.nickname }</i>
+                                                        alt="${item.toReply.nickname }"> <cite> <i>${item.toReply.nickname }</i>
                                                     <!--  <em style="padding: 0; color: #FF7200;">VIP2</em> -->
                                                 </cite>
                                                 </a>

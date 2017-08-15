@@ -2,7 +2,9 @@ package com.work4j.space.controller.fore;
 
 import com.work4j.space.util.FileUploadBean;
 import com.work4j.space.util.FileUtil;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +23,12 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("/upload")
+@Data
 public class UploadController {
-    private String uploadpath = "D://img";
-    private String realpath = "/img";
+    @Value("${file.uploadpath}")
+    private String uploadpath;
+    @Value("${file.filepath}")
+    private String filepath;
 
     /**
      * 文件上传
@@ -40,7 +45,7 @@ public class UploadController {
         // 上传路径://真实路径/文件上传路径/日期/时间.后缀
         String targetPathNameWithoutSuffix = realPath;
         FileUtil.uploadFileSpringMVC(uploadItem.getFile(), targetPathNameWithoutSuffix);
-        String path = realpath + attachPath + "." + suffix;
+        String path = filepath + attachPath + "." + suffix;
         result.put("code", 0);
         result.put("msg", "");
         result.put("url", path);

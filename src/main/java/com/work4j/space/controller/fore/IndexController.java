@@ -3,6 +3,8 @@ package com.work4j.space.controller.fore;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,9 +18,12 @@ import com.work4j.space.service.ArticleService;
 import com.work4j.space.service.UserService;
 
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class IndexController {
+    @Value("${file.headpath}")
+    private String headpath;
     @Resource
     private UserService userService;
     @Resource
@@ -31,6 +36,7 @@ public class IndexController {
 
     @RequestMapping("/login")
     public String toLogin() {
+        System.out.println(headpath);
         return "login/login";
     }
 
@@ -42,6 +48,7 @@ public class IndexController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(UserForm form) {
         ModelAndView mav = new ModelAndView("login/login");
+        form.setHead(headpath + new Random().nextInt(12) + ".jpg");
         userService.add(form);
         mav.addObject("msg", "注册成功");
         return mav;
@@ -78,10 +85,10 @@ public class IndexController {
         if (user.size() > 0) {
             SystemHelper.setCurrentUser(user.get(0));
             String referer = request.getHeader("referer");
-            if(referer.contains("redirect")){
+            if (referer.contains("redirect")) {
                 String url = referer.substring(referer.indexOf("redirect") + 9, referer.length());
                 if (url != null && !url.equals("")) {
-                    mav.setViewName("redirect:" +  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + url);
+                    mav.setViewName("redirect:" + request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + url);
                 }
             } else {
                 mav.setViewName("redirect:index");
